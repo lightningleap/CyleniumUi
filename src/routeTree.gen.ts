@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as authSignInRouteImport } from './routes/(auth)/sign-in'
+import { Route as authMfaRouteImport } from './routes/(auth)/mfa'
 
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
@@ -28,34 +29,43 @@ const authSignInRoute = authSignInRouteImport.update({
   path: '/sign-in',
   getParentRoute: () => rootRouteImport,
 } as any)
+const authMfaRoute = authMfaRouteImport.update({
+  id: '/(auth)/mfa',
+  path: '/mfa',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/mfa': typeof authMfaRoute
   '/sign-in': typeof authSignInRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/mfa': typeof authMfaRoute
   '/sign-in': typeof authSignInRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/(auth)/mfa': typeof authMfaRoute
   '/(auth)/sign-in': typeof authSignInRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/sign-in'
+  fullPaths: '/' | '/about' | '/mfa' | '/sign-in'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/sign-in'
-  id: '__root__' | '/' | '/about' | '/(auth)/sign-in'
+  to: '/' | '/about' | '/mfa' | '/sign-in'
+  id: '__root__' | '/' | '/about' | '/(auth)/mfa' | '/(auth)/sign-in'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  authMfaRoute: typeof authMfaRoute
   authSignInRoute: typeof authSignInRoute
 }
 
@@ -82,12 +92,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authSignInRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(auth)/mfa': {
+      id: '/(auth)/mfa'
+      path: '/mfa'
+      fullPath: '/mfa'
+      preLoaderRoute: typeof authMfaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  authMfaRoute: authMfaRoute,
   authSignInRoute: authSignInRoute,
 }
 export const routeTree = rootRouteImport
