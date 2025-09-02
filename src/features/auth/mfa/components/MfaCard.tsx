@@ -23,8 +23,17 @@ export function MfaCard() {
   }
 
   const handleKeyDown = (index: number, e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Backspace' && !otp[index] && index > 0) {
-      inputRefs.current[index - 1]?.focus()
+    if (e.key === 'Backspace') {
+      const updatedOtp = [...otp]
+      if (otp[index]) {
+        // If current field has a value, clear it
+        updatedOtp[index] = ''
+      } else if (index > 0) {
+        // If current field is empty, move to previous field and clear it
+        updatedOtp[index - 1] = ''
+        inputRefs.current[index - 1]?.focus()
+      }
+      setOtp(updatedOtp)
     }
   }
 
