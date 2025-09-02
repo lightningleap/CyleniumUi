@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as dashboardOrganisationDashboardRouteImport } from './routes/(dashboard)/organisationDashboard'
+import { Route as dashboardGeneralUserDashBoardRouteImport } from './routes/(dashboard)/generalUserDashBoard'
 import { Route as dashboardAdminDashboardRouteImport } from './routes/(dashboard)/adminDashboard'
 import { Route as authSignInRouteImport } from './routes/(auth)/sign-in'
 import { Route as authMfaRouteImport } from './routes/(auth)/mfa'
@@ -31,6 +32,12 @@ const dashboardOrganisationDashboardRoute =
   dashboardOrganisationDashboardRouteImport.update({
     id: '/(dashboard)/organisationDashboard',
     path: '/organisationDashboard',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const dashboardGeneralUserDashBoardRoute =
+  dashboardGeneralUserDashBoardRouteImport.update({
+    id: '/(dashboard)/generalUserDashBoard',
+    path: '/generalUserDashBoard',
     getParentRoute: () => rootRouteImport,
   } as any)
 const dashboardAdminDashboardRoute = dashboardAdminDashboardRouteImport.update({
@@ -61,6 +68,7 @@ export interface FileRoutesByFullPath {
   '/mfa': typeof authMfaRoute
   '/sign-in': typeof authSignInRoute
   '/adminDashboard': typeof dashboardAdminDashboardRoute
+  '/generalUserDashBoard': typeof dashboardGeneralUserDashBoardRoute
   '/organisationDashboard': typeof dashboardOrganisationDashboardRoute
 }
 export interface FileRoutesByTo {
@@ -70,6 +78,7 @@ export interface FileRoutesByTo {
   '/mfa': typeof authMfaRoute
   '/sign-in': typeof authSignInRoute
   '/adminDashboard': typeof dashboardAdminDashboardRoute
+  '/generalUserDashBoard': typeof dashboardGeneralUserDashBoardRoute
   '/organisationDashboard': typeof dashboardOrganisationDashboardRoute
 }
 export interface FileRoutesById {
@@ -80,6 +89,7 @@ export interface FileRoutesById {
   '/(auth)/mfa': typeof authMfaRoute
   '/(auth)/sign-in': typeof authSignInRoute
   '/(dashboard)/adminDashboard': typeof dashboardAdminDashboardRoute
+  '/(dashboard)/generalUserDashBoard': typeof dashboardGeneralUserDashBoardRoute
   '/(dashboard)/organisationDashboard': typeof dashboardOrganisationDashboardRoute
 }
 export interface FileRouteTypes {
@@ -91,6 +101,7 @@ export interface FileRouteTypes {
     | '/mfa'
     | '/sign-in'
     | '/adminDashboard'
+    | '/generalUserDashBoard'
     | '/organisationDashboard'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -100,6 +111,7 @@ export interface FileRouteTypes {
     | '/mfa'
     | '/sign-in'
     | '/adminDashboard'
+    | '/generalUserDashBoard'
     | '/organisationDashboard'
   id:
     | '__root__'
@@ -109,6 +121,7 @@ export interface FileRouteTypes {
     | '/(auth)/mfa'
     | '/(auth)/sign-in'
     | '/(dashboard)/adminDashboard'
+    | '/(dashboard)/generalUserDashBoard'
     | '/(dashboard)/organisationDashboard'
   fileRoutesById: FileRoutesById
 }
@@ -119,6 +132,7 @@ export interface RootRouteChildren {
   authMfaRoute: typeof authMfaRoute
   authSignInRoute: typeof authSignInRoute
   dashboardAdminDashboardRoute: typeof dashboardAdminDashboardRoute
+  dashboardGeneralUserDashBoardRoute: typeof dashboardGeneralUserDashBoardRoute
   dashboardOrganisationDashboardRoute: typeof dashboardOrganisationDashboardRoute
 }
 
@@ -143,6 +157,13 @@ declare module '@tanstack/react-router' {
       path: '/organisationDashboard'
       fullPath: '/organisationDashboard'
       preLoaderRoute: typeof dashboardOrganisationDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(dashboard)/generalUserDashBoard': {
+      id: '/(dashboard)/generalUserDashBoard'
+      path: '/generalUserDashBoard'
+      fullPath: '/generalUserDashBoard'
+      preLoaderRoute: typeof dashboardGeneralUserDashBoardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(dashboard)/adminDashboard': {
@@ -183,6 +204,7 @@ const rootRouteChildren: RootRouteChildren = {
   authMfaRoute: authMfaRoute,
   authSignInRoute: authSignInRoute,
   dashboardAdminDashboardRoute: dashboardAdminDashboardRoute,
+  dashboardGeneralUserDashBoardRoute: dashboardGeneralUserDashBoardRoute,
   dashboardOrganisationDashboardRoute: dashboardOrganisationDashboardRoute,
 }
 export const routeTree = rootRouteImport

@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { ToastProvider } from './components/ui/toast-provider'
+import { AuthProvider } from './lib/auth-context'
 
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
@@ -25,9 +26,11 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)
   root.render(
     <StrictMode>
-      <ToastProvider>
-        <RouterProvider router={router} />
-      </ToastProvider>
+      <AuthProvider>
+        <ToastProvider>
+          <RouterProvider router={router} />
+        </ToastProvider>
+      </AuthProvider>
     </StrictMode>,
   )
 }
