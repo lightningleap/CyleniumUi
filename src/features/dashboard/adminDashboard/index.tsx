@@ -1,61 +1,49 @@
 import { useState } from 'react';
+import { DashboardLayout } from '../DashboardLayout';
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('dashboard');
-    return (
-      <div className="min-h-screen flex relative overflow-hidden bg-[#09090B]">
-        {/* Background */}
-        <div
-          className="absolute inset-0 bg-center bg-no-repeat bg-cover opacity-50"
-          style={{ backgroundImage: 'url(/Background.svg)' }}
-        />
-        {/* Sidebar */}
-        <aside className="w-64 bg-black/60 backdrop-blur-sm text-white flex flex-col relative z-10 border-r border-white/10">
-          <div className="p-6 flex items-center space-x-3 border-b border-white/10">
-            <img src="/logo/Cylenium.svg" alt="Cylenium" className="w-8 h-8" />
-            <span className="text-xl font-semibold">Admin Panel</span>
-          </div>
-          <nav className="flex-1 p-4 space-y-2">
-            <button
-              onClick={() => setActiveTab('dashboard')}
-              className={`w-full text-left p-3 rounded-lg transition-colors ${activeTab === 'dashboard' ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-white/10'}`}
-            >
-              Dashboard
-            </button>
-            <button
-              onClick={() => setActiveTab('users')}
-              className={`w-full text-left p-3 rounded-lg transition-colors ${activeTab === 'users' ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-white/10'}`}
-            >
-              Users
-            </button>
-            <button
-              onClick={() => setActiveTab('settings')}
-              className={`w-full text-left p-3 rounded-lg transition-colors ${activeTab === 'settings' ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-white/10'}`}
-            >
-              Settings
-            </button>
-          </nav>
-        </aside>
   
-        {/* Main Content */}
-        <main className="flex-1 p-8 relative z-10">
-          <h1 className="text-3xl font-semibold text-white">Welcome, Admin!</h1>
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="p-6 bg-black/60 backdrop-blur-sm rounded-lg border border-white/10">
-              <h2 className="text-lg font-medium text-gray-300">Total Users</h2>
-              <p className="mt-2 text-2xl font-bold text-white">120</p>
-            </div>
-            <div className="p-6 bg-black/60 backdrop-blur-sm rounded-lg border border-white/10">
-              <h2 className="text-lg font-medium text-gray-300">Active Sessions</h2>
-              <p className="mt-2 text-2xl font-bold text-white">34</p>
-            </div>
-            <div className="p-6 bg-black/60 backdrop-blur-sm rounded-lg border border-white/10">
-              <h2 className="text-lg font-medium text-gray-300">Pending Requests</h2>
-              <p className="mt-2 text-2xl font-bold text-white">5</p>
+  return (
+    <DashboardLayout>
+      <div className="p-6">
+        <h1 className="text-2xl font-bold mb-6">Admin Dashboard</h1>
+        
+        {/* Dashboard Content */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Stats Cards */}
+          <div className="bg-white/5 p-6 rounded-lg border border-white/10">
+            <h3 className="text-gray-400 text-sm font-medium">Total Users</h3>
+            <p className="text-2xl font-bold mt-2">1,234</p>
+          </div>
+          
+          <div className="bg-white/5 p-6 rounded-lg border border-white/10">
+            <h3 className="text-gray-400 text-sm font-medium">Active Sessions</h3>
+            <p className="text-2xl font-bold mt-2">42</p>
+          </div>
+          
+          <div className="bg-white/5 p-6 rounded-lg border border-white/10">
+            <h3 className="text-gray-400 text-sm font-medium">Storage Used</h3>
+            <p className="text-2xl font-bold mt-2">1.2 GB</p>
+          </div>
+          
+          {/* Main Content Area */}
+          <div className="md:col-span-2 lg:col-span-3 bg-white/5 p-6 rounded-lg border border-white/10">
+            <h2 className="text-lg font-semibold mb-4">Recent Activity</h2>
+            <div className="space-y-4">
+              {/* Add your activity items here */}
+              <div className="p-3 bg-white/5 rounded">
+                <p>New user registered: johndoe@example.com</p>
+                <p className="text-sm text-gray-400">2 minutes ago</p>
+              </div>
+              <div className="p-3 bg-white/5 rounded">
+                <p>System update completed successfully</p>
+                <p className="text-sm text-gray-400">1 hour ago</p>
+              </div>
             </div>
           </div>
-        </main>
+        </div>
       </div>
-    );
-  }
-  
+    </DashboardLayout>
+  );
+}
