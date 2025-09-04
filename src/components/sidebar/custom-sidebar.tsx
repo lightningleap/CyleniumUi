@@ -219,7 +219,7 @@ const NavMain = ({
 
 const NavUser = ({ onUserAction }: { onUserAction: (action: string) => void }) => {
   const navigate = useNavigate();
-  const [showPasswordDialog, setShowPasswordDialog] = useState(false);
+  const [_showPasswordDialog, setShowPasswordDialog] = useState(false);
   const user = {
     name: "John Doe",
     email: "john@aegismind.com",
