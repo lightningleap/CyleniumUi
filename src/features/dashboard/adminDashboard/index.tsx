@@ -1,8 +1,8 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import { DashboardLayout } from '../DashboardLayout';
 
 export default function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState('dashboard');
+  // const [activeTab, setActiveTab] = useState('dashboard');
   
   return (
     <DashboardLayout>
