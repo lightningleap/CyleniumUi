@@ -1,9 +1,10 @@
-import AuthLayout from "./auth-layout";
+import AuthLayout from "./auth-layout"
+import { SignInCard } from "./SignInCard"
 
 export default function SignIn() {
   return (
     <AuthLayout>
-      <div>child component auth signin</div>
+      <SignInCard />
     </AuthLayout>
-  );
+  )
 }

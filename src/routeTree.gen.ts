@@ -11,8 +11,12 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as dashboardOrganisationDashboardRouteImport } from './routes/(dashboard)/organisationDashboard'
+import { Route as dashboardGeneralUserDashBoardRouteImport } from './routes/(dashboard)/generalUserDashBoard'
+import { Route as dashboardAdminDashboardRouteImport } from './routes/(dashboard)/adminDashboard'
 import { Route as authSignInRouteImport } from './routes/(auth)/sign-in'
 import { Route as authMfaRouteImport } from './routes/(auth)/mfa'
+import { Route as authForgotPasswordRouteImport } from './routes/(auth)/forgotPassword'
 
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
@@ -22,6 +26,23 @@ const AboutRoute = AboutRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const dashboardOrganisationDashboardRoute =
+  dashboardOrganisationDashboardRouteImport.update({
+    id: '/(dashboard)/organisationDashboard',
+    path: '/organisationDashboard',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const dashboardGeneralUserDashBoardRoute =
+  dashboardGeneralUserDashBoardRouteImport.update({
+    id: '/(dashboard)/generalUserDashBoard',
+    path: '/generalUserDashBoard',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const dashboardAdminDashboardRoute = dashboardAdminDashboardRouteImport.update({
+  id: '/(dashboard)/adminDashboard',
+  path: '/adminDashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const authSignInRoute = authSignInRouteImport.update({
@@ -34,39 +55,85 @@ const authMfaRoute = authMfaRouteImport.update({
   path: '/mfa',
   getParentRoute: () => rootRouteImport,
 } as any)
+const authForgotPasswordRoute = authForgotPasswordRouteImport.update({
+  id: '/(auth)/forgotPassword',
+  path: '/forgotPassword',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/forgotPassword': typeof authForgotPasswordRoute
   '/mfa': typeof authMfaRoute
   '/sign-in': typeof authSignInRoute
+  '/adminDashboard': typeof dashboardAdminDashboardRoute
+  '/generalUserDashBoard': typeof dashboardGeneralUserDashBoardRoute
+  '/organisationDashboard': typeof dashboardOrganisationDashboardRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/forgotPassword': typeof authForgotPasswordRoute
   '/mfa': typeof authMfaRoute
   '/sign-in': typeof authSignInRoute
+  '/adminDashboard': typeof dashboardAdminDashboardRoute
+  '/generalUserDashBoard': typeof dashboardGeneralUserDashBoardRoute
+  '/organisationDashboard': typeof dashboardOrganisationDashboardRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/(auth)/forgotPassword': typeof authForgotPasswordRoute
   '/(auth)/mfa': typeof authMfaRoute
   '/(auth)/sign-in': typeof authSignInRoute
+  '/(dashboard)/adminDashboard': typeof dashboardAdminDashboardRoute
+  '/(dashboard)/generalUserDashBoard': typeof dashboardGeneralUserDashBoardRoute
+  '/(dashboard)/organisationDashboard': typeof dashboardOrganisationDashboardRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/mfa' | '/sign-in'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/forgotPassword'
+    | '/mfa'
+    | '/sign-in'
+    | '/adminDashboard'
+    | '/generalUserDashBoard'
+    | '/organisationDashboard'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/mfa' | '/sign-in'
-  id: '__root__' | '/' | '/about' | '/(auth)/mfa' | '/(auth)/sign-in'
+  to:
+    | '/'
+    | '/about'
+    | '/forgotPassword'
+    | '/mfa'
+    | '/sign-in'
+    | '/adminDashboard'
+    | '/generalUserDashBoard'
+    | '/organisationDashboard'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/(auth)/forgotPassword'
+    | '/(auth)/mfa'
+    | '/(auth)/sign-in'
+    | '/(dashboard)/adminDashboard'
+    | '/(dashboard)/generalUserDashBoard'
+    | '/(dashboard)/organisationDashboard'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  authForgotPasswordRoute: typeof authForgotPasswordRoute
   authMfaRoute: typeof authMfaRoute
   authSignInRoute: typeof authSignInRoute
+  dashboardAdminDashboardRoute: typeof dashboardAdminDashboardRoute
+  dashboardGeneralUserDashBoardRoute: typeof dashboardGeneralUserDashBoardRoute
+  dashboardOrganisationDashboardRoute: typeof dashboardOrganisationDashboardRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -85,6 +152,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(dashboard)/organisationDashboard': {
+      id: '/(dashboard)/organisationDashboard'
+      path: '/organisationDashboard'
+      fullPath: '/organisationDashboard'
+      preLoaderRoute: typeof dashboardOrganisationDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(dashboard)/generalUserDashBoard': {
+      id: '/(dashboard)/generalUserDashBoard'
+      path: '/generalUserDashBoard'
+      fullPath: '/generalUserDashBoard'
+      preLoaderRoute: typeof dashboardGeneralUserDashBoardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(dashboard)/adminDashboard': {
+      id: '/(dashboard)/adminDashboard'
+      path: '/adminDashboard'
+      fullPath: '/adminDashboard'
+      preLoaderRoute: typeof dashboardAdminDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/(auth)/sign-in': {
       id: '/(auth)/sign-in'
       path: '/sign-in'
@@ -99,14 +187,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authMfaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(auth)/forgotPassword': {
+      id: '/(auth)/forgotPassword'
+      path: '/forgotPassword'
+      fullPath: '/forgotPassword'
+      preLoaderRoute: typeof authForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  authForgotPasswordRoute: authForgotPasswordRoute,
   authMfaRoute: authMfaRoute,
   authSignInRoute: authSignInRoute,
+  dashboardAdminDashboardRoute: dashboardAdminDashboardRoute,
+  dashboardGeneralUserDashBoardRoute: dashboardGeneralUserDashBoardRoute,
+  dashboardOrganisationDashboardRoute: dashboardOrganisationDashboardRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
