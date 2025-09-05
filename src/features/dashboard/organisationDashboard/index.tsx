@@ -206,16 +206,7 @@ export default function OrganizationDashboard() {
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
                 <div>
                   <h1 className="text-2xl font-bold">Organizations</h1>
-                  <p className="text-sm text-gray-500">Manage your organizations and view their details</p>
                 </div>
-                <Button 
-                  variant="bluebutton" 
-                  className="w-full md:w-auto mt-2 md:mt-0"
-                  onClick={handleNewOrganizationClick}
-                >
-                  <Plus className="mr-2 h-4 w-4" />
-                  New Organization
-                </Button>
               </div>
               {/* Header with search and actions */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
@@ -238,6 +229,14 @@ export default function OrganizationDashboard() {
                     <span className="sr-only">Filter</span>
                   </Button>
                 </div>
+                <Button 
+                  variant="bluebutton" 
+                  className="w-full md:w-auto mt-2 md:mt-0"
+                  onClick={handleNewOrganizationClick}
+                >
+                  <Plus className="mr-2 h-4 w-4" />
+                  New Organization
+                </Button>
               </div>
               {/* Table Container */}
               <div className="flex flex-col h-[calc(100vh-250px)] min-h-[400px] rounded-lg border shadow-sm">

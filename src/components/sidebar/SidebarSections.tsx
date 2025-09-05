@@ -14,7 +14,7 @@ export const SIDEBAR_SECTIONS: SidebarSection[] = [
     items: [
       {
         title: 'Dashboard',
-        href: '/dashboard',
+        href: '/organisationDashboard',
         icon: <LayoutDashboard size={16} />
       },
       {

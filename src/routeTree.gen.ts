@@ -16,13 +16,14 @@ import { Route as errors500RouteImport } from './routes/(errors)/500'
 import { Route as errors404RouteImport } from './routes/(errors)/404'
 import { Route as errors403RouteImport } from './routes/(errors)/403'
 import { Route as errors401RouteImport } from './routes/(errors)/401'
-import { Route as dashboardOrganisationDashboardRouteImport } from './routes/(dashboard)/organisationDashboard'
 import { Route as dashboardGeneralUserDashBoardRouteImport } from './routes/(dashboard)/generalUserDashBoard'
 import { Route as dashboardAdminDashboardRouteImport } from './routes/(dashboard)/adminDashboard'
 import { Route as authSignInRouteImport } from './routes/(auth)/sign-in'
 import { Route as authMfaRouteImport } from './routes/(auth)/mfa'
 import { Route as authForgotPasswordRouteImport } from './routes/(auth)/forgotPassword'
-import { Route as dashboardOrganisationDashboardNewRouteImport } from './routes/(dashboard)/organisationDashboard/new'
+import { Route as dashboardorganisationOrganizationsRouteImport } from './routes/(dashboard)/(organisation)/organizations'
+import { Route as dashboardorganisationOrganisationDashboardRouteImport } from './routes/(dashboard)/(organisation)/organisationDashboard'
+import { Route as dashboardorganisationOrganisationDashboardNewRouteImport } from './routes/(dashboard)/(organisation)/organisationDashboard/new'
 
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
@@ -59,12 +60,6 @@ const errors401Route = errors401RouteImport.update({
   path: '/401',
   getParentRoute: () => rootRouteImport,
 } as any)
-const dashboardOrganisationDashboardRoute =
-  dashboardOrganisationDashboardRouteImport.update({
-    id: '/(dashboard)/organisationDashboard',
-    path: '/organisationDashboard',
-    getParentRoute: () => rootRouteImport,
-  } as any)
 const dashboardGeneralUserDashBoardRoute =
   dashboardGeneralUserDashBoardRouteImport.update({
     id: '/(dashboard)/generalUserDashBoard',
@@ -91,11 +86,23 @@ const authForgotPasswordRoute = authForgotPasswordRouteImport.update({
   path: '/forgotPassword',
   getParentRoute: () => rootRouteImport,
 } as any)
-const dashboardOrganisationDashboardNewRoute =
-  dashboardOrganisationDashboardNewRouteImport.update({
+const dashboardorganisationOrganizationsRoute =
+  dashboardorganisationOrganizationsRouteImport.update({
+    id: '/(dashboard)/(organisation)/organizations',
+    path: '/organizations',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const dashboardorganisationOrganisationDashboardRoute =
+  dashboardorganisationOrganisationDashboardRouteImport.update({
+    id: '/(dashboard)/(organisation)/organisationDashboard',
+    path: '/organisationDashboard',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const dashboardorganisationOrganisationDashboardNewRoute =
+  dashboardorganisationOrganisationDashboardNewRouteImport.update({
     id: '/new',
     path: '/new',
-    getParentRoute: () => dashboardOrganisationDashboardRoute,
+    getParentRoute: () => dashboardorganisationOrganisationDashboardRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -106,13 +113,14 @@ export interface FileRoutesByFullPath {
   '/sign-in': typeof authSignInRoute
   '/adminDashboard': typeof dashboardAdminDashboardRoute
   '/generalUserDashBoard': typeof dashboardGeneralUserDashBoardRoute
-  '/organisationDashboard': typeof dashboardOrganisationDashboardRouteWithChildren
   '/401': typeof errors401Route
   '/403': typeof errors403Route
   '/404': typeof errors404Route
   '/500': typeof errors500Route
   '/503': typeof errors503Route
-  '/organisationDashboard/new': typeof dashboardOrganisationDashboardNewRoute
+  '/organisationDashboard': typeof dashboardorganisationOrganisationDashboardRouteWithChildren
+  '/organizations': typeof dashboardorganisationOrganizationsRoute
+  '/organisationDashboard/new': typeof dashboardorganisationOrganisationDashboardNewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -122,13 +130,14 @@ export interface FileRoutesByTo {
   '/sign-in': typeof authSignInRoute
   '/adminDashboard': typeof dashboardAdminDashboardRoute
   '/generalUserDashBoard': typeof dashboardGeneralUserDashBoardRoute
-  '/organisationDashboard': typeof dashboardOrganisationDashboardRouteWithChildren
   '/401': typeof errors401Route
   '/403': typeof errors403Route
   '/404': typeof errors404Route
   '/500': typeof errors500Route
   '/503': typeof errors503Route
-  '/organisationDashboard/new': typeof dashboardOrganisationDashboardNewRoute
+  '/organisationDashboard': typeof dashboardorganisationOrganisationDashboardRouteWithChildren
+  '/organizations': typeof dashboardorganisationOrganizationsRoute
+  '/organisationDashboard/new': typeof dashboardorganisationOrganisationDashboardNewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -139,13 +148,14 @@ export interface FileRoutesById {
   '/(auth)/sign-in': typeof authSignInRoute
   '/(dashboard)/adminDashboard': typeof dashboardAdminDashboardRoute
   '/(dashboard)/generalUserDashBoard': typeof dashboardGeneralUserDashBoardRoute
-  '/(dashboard)/organisationDashboard': typeof dashboardOrganisationDashboardRouteWithChildren
   '/(errors)/401': typeof errors401Route
   '/(errors)/403': typeof errors403Route
   '/(errors)/404': typeof errors404Route
   '/(errors)/500': typeof errors500Route
   '/(errors)/503': typeof errors503Route
-  '/(dashboard)/organisationDashboard/new': typeof dashboardOrganisationDashboardNewRoute
+  '/(dashboard)/(organisation)/organisationDashboard': typeof dashboardorganisationOrganisationDashboardRouteWithChildren
+  '/(dashboard)/(organisation)/organizations': typeof dashboardorganisationOrganizationsRoute
+  '/(dashboard)/(organisation)/organisationDashboard/new': typeof dashboardorganisationOrganisationDashboardNewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -157,12 +167,13 @@ export interface FileRouteTypes {
     | '/sign-in'
     | '/adminDashboard'
     | '/generalUserDashBoard'
-    | '/organisationDashboard'
     | '/401'
     | '/403'
     | '/404'
     | '/500'
     | '/503'
+    | '/organisationDashboard'
+    | '/organizations'
     | '/organisationDashboard/new'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -173,12 +184,13 @@ export interface FileRouteTypes {
     | '/sign-in'
     | '/adminDashboard'
     | '/generalUserDashBoard'
-    | '/organisationDashboard'
     | '/401'
     | '/403'
     | '/404'
     | '/500'
     | '/503'
+    | '/organisationDashboard'
+    | '/organizations'
     | '/organisationDashboard/new'
   id:
     | '__root__'
@@ -189,13 +201,14 @@ export interface FileRouteTypes {
     | '/(auth)/sign-in'
     | '/(dashboard)/adminDashboard'
     | '/(dashboard)/generalUserDashBoard'
-    | '/(dashboard)/organisationDashboard'
     | '/(errors)/401'
     | '/(errors)/403'
     | '/(errors)/404'
     | '/(errors)/500'
     | '/(errors)/503'
-    | '/(dashboard)/organisationDashboard/new'
+    | '/(dashboard)/(organisation)/organisationDashboard'
+    | '/(dashboard)/(organisation)/organizations'
+    | '/(dashboard)/(organisation)/organisationDashboard/new'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -206,12 +219,13 @@ export interface RootRouteChildren {
   authSignInRoute: typeof authSignInRoute
   dashboardAdminDashboardRoute: typeof dashboardAdminDashboardRoute
   dashboardGeneralUserDashBoardRoute: typeof dashboardGeneralUserDashBoardRoute
-  dashboardOrganisationDashboardRoute: typeof dashboardOrganisationDashboardRouteWithChildren
   errors401Route: typeof errors401Route
   errors403Route: typeof errors403Route
   errors404Route: typeof errors404Route
   errors500Route: typeof errors500Route
   errors503Route: typeof errors503Route
+  dashboardorganisationOrganisationDashboardRoute: typeof dashboardorganisationOrganisationDashboardRouteWithChildren
+  dashboardorganisationOrganizationsRoute: typeof dashboardorganisationOrganizationsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -265,13 +279,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof errors401RouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/(dashboard)/organisationDashboard': {
-      id: '/(dashboard)/organisationDashboard'
-      path: '/organisationDashboard'
-      fullPath: '/organisationDashboard'
-      preLoaderRoute: typeof dashboardOrganisationDashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/(dashboard)/generalUserDashBoard': {
       id: '/(dashboard)/generalUserDashBoard'
       path: '/generalUserDashBoard'
@@ -307,29 +314,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/(dashboard)/organisationDashboard/new': {
-      id: '/(dashboard)/organisationDashboard/new'
+    '/(dashboard)/(organisation)/organizations': {
+      id: '/(dashboard)/(organisation)/organizations'
+      path: '/organizations'
+      fullPath: '/organizations'
+      preLoaderRoute: typeof dashboardorganisationOrganizationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(dashboard)/(organisation)/organisationDashboard': {
+      id: '/(dashboard)/(organisation)/organisationDashboard'
+      path: '/organisationDashboard'
+      fullPath: '/organisationDashboard'
+      preLoaderRoute: typeof dashboardorganisationOrganisationDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(dashboard)/(organisation)/organisationDashboard/new': {
+      id: '/(dashboard)/(organisation)/organisationDashboard/new'
       path: '/new'
       fullPath: '/organisationDashboard/new'
-      preLoaderRoute: typeof dashboardOrganisationDashboardNewRouteImport
-      parentRoute: typeof dashboardOrganisationDashboardRoute
+      preLoaderRoute: typeof dashboardorganisationOrganisationDashboardNewRouteImport
+      parentRoute: typeof dashboardorganisationOrganisationDashboardRoute
     }
   }
 }
 
-interface dashboardOrganisationDashboardRouteChildren {
-  dashboardOrganisationDashboardNewRoute: typeof dashboardOrganisationDashboardNewRoute
+interface dashboardorganisationOrganisationDashboardRouteChildren {
+  dashboardorganisationOrganisationDashboardNewRoute: typeof dashboardorganisationOrganisationDashboardNewRoute
 }
 
-const dashboardOrganisationDashboardRouteChildren: dashboardOrganisationDashboardRouteChildren =
+const dashboardorganisationOrganisationDashboardRouteChildren: dashboardorganisationOrganisationDashboardRouteChildren =
   {
-    dashboardOrganisationDashboardNewRoute:
-      dashboardOrganisationDashboardNewRoute,
+    dashboardorganisationOrganisationDashboardNewRoute:
+      dashboardorganisationOrganisationDashboardNewRoute,
   }
 
-const dashboardOrganisationDashboardRouteWithChildren =
-  dashboardOrganisationDashboardRoute._addFileChildren(
-    dashboardOrganisationDashboardRouteChildren,
+const dashboardorganisationOrganisationDashboardRouteWithChildren =
+  dashboardorganisationOrganisationDashboardRoute._addFileChildren(
+    dashboardorganisationOrganisationDashboardRouteChildren,
   )
 
 const rootRouteChildren: RootRouteChildren = {
@@ -340,13 +361,15 @@ const rootRouteChildren: RootRouteChildren = {
   authSignInRoute: authSignInRoute,
   dashboardAdminDashboardRoute: dashboardAdminDashboardRoute,
   dashboardGeneralUserDashBoardRoute: dashboardGeneralUserDashBoardRoute,
-  dashboardOrganisationDashboardRoute:
-    dashboardOrganisationDashboardRouteWithChildren,
   errors401Route: errors401Route,
   errors403Route: errors403Route,
   errors404Route: errors404Route,
   errors500Route: errors500Route,
   errors503Route: errors503Route,
+  dashboardorganisationOrganisationDashboardRoute:
+    dashboardorganisationOrganisationDashboardRouteWithChildren,
+  dashboardorganisationOrganizationsRoute:
+    dashboardorganisationOrganizationsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
