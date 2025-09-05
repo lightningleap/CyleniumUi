@@ -52,7 +52,7 @@ import darkLogo from '@/assets/SidebarHeaderLogo.svg';
 // Types are now imported from './types'
 
 // Custom hook for TanStack Router navigation
-const useAppNavigation = () => {
+export const useAppNavigation = () => {
   const navigate = useNavigate();
   const router = useRouter();
   

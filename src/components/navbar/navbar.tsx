@@ -8,8 +8,8 @@ import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import darkLogo from '@/assets/SignInImages/CyleniumLogo.svg';
-import lightLogo from '@/assets/SignInImages/CyleniumLogo.svg';
+// import darkLogo from '@/assets/SidebarHeaderLogo.svg';
+import lightLogo from '@/assets/SidebarHeaderLogo.svg';
 // import { useAuth } from '@/contexts/AuthContext';
 
 
@@ -96,14 +96,17 @@ export function Navbar({
           <div className="h-6">
             <img 
               src={lightLogo} 
-              alt="AEGISMIND Logo" 
+              alt="CYLENIUM Logo" 
               className="h-full w-auto object-contain dark:hidden"
             />
-            <img 
+            {/* <img 
               src={darkLogo} 
-              alt="AEGISMIND Logo" 
+              alt="CYLENIUM Logo" 
               className="hidden h-full w-auto object-contain dark:block"
-            />
+            /> */}
+             <span className="font-inter font-normal text-[9px] leading-[17px] tracking-[0.1em] uppercase text-[#3F3F46] group-data-[collapsible=icon]:hidden">
+            Administrator Center
+          </span>
           </div>
         </div>
         
