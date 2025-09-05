@@ -20,10 +20,18 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   };
 
   const dashboardType = getDashboardType(pathname);
-  const breadcrumb = [
-    { label: 'Dashboard', href: '/dashboard' },
-    { label: dashboardType, active: true }
-  ];
+  const isNewOrgRoute = pathname.endsWith('/new');
+  
+  const breadcrumb = isNewOrgRoute 
+    ? [
+        { label: 'Dashboard', href: '/dashboard' },
+        { label: dashboardType, href: '/organisationDashboard' },
+        { label: 'New Organization', active: true }
+      ]
+    : [
+        { label: 'Dashboard', href: '/dashboard' },
+        { label: dashboardType, active: true }
+      ];
 
   return (
     <SidebarLayoutWithNavbar
