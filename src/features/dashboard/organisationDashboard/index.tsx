@@ -84,33 +84,6 @@ export default function OrganizationDashboard() {
       plan: 'Premium',
       status: 'Active',
       lastActive: '5 hours ago',
-    },
-    {
-      id: '8',
-      name: 'Wayne Enterprises',
-      email: 'support@wayne.com',
-      logo: '',
-      plan: 'Pro',
-      status: 'Inactive',
-      lastActive: '1 month ago',
-    },
-    {
-      id: '9',
-      name: 'Oscorp',
-      email: 'hello@oscorp.com',
-      logo: '',
-      plan: 'Standard',
-      status: 'Active',
-      lastActive: '3 days ago',
-    },
-    {
-      id: '10',
-      name: 'Wonka Industries',
-      email: 'contact@wonka.com',
-      logo: '',
-      plan: 'Basic',
-      status: 'Pending',
-      lastActive: '1 week ago',
     }
   ];
 
@@ -154,7 +127,7 @@ export default function OrganizationDashboard() {
   }, [allOrganizations, sortConfig]);
 
   // Filter and paginate data
-  const { filteredOrganizations, pageCount, totalItems } = useMemo(() => {
+  const { filteredOrganizations, pageCount } = useMemo(() => {
     const filtered = sortedOrganizations.filter(org => 
       org.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       org.email.toLowerCase().includes(searchTerm.toLowerCase())
@@ -163,7 +136,7 @@ export default function OrganizationDashboard() {
     const pageCount = Math.ceil(filtered.length / pageSize);
     const startIndex = pageIndex * pageSize;
     const paginatedData = filtered.slice(startIndex, startIndex + pageSize);
-
+    
     return {
       filteredOrganizations: paginatedData,
       pageCount,
@@ -207,12 +180,19 @@ export default function OrganizationDashboard() {
   };
 
   const handleRowClick = (id: string) => {
-    navigate({ to: '/organisationDashboard/$id', params: { id } });
+    const org = allOrganizations.find(org => org.id === id);
+    if (org) {
+      navigate({
+        to: '/organisationDashboard/$id',
+        params: { id },
+        state: (prev) => ({ ...prev, org })
+      });
+    }
   };
 
   return (
     <DashboardLayout>
-      <div className="flex flex-col h-[calc(100vh-4rem)] w-full">
+      <div className="flex flex-col h-[calc(100vh-4rem)] w-full overflow-auto scrollbar-thin scrollbar-thumb-muted-foreground/20 scrollbar-track-background hover:scrollbar-thumb-muted-foreground/30">
         {isNewOrgRoute || isProfileRoute ? (
           <Outlet />
         ) : (

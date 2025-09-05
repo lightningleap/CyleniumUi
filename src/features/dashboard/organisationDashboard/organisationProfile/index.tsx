@@ -1,110 +1,127 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useRouter } from '@tanstack/react-router';
-import { ArrowLeft, ChevronDown , MoreHorizontal} from 'lucide-react';
+import { useRouter, useParams } from '@tanstack/react-router';
+import { ArrowLeft, ChevronDown, MoreHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/toast-provider';
-import { useParams } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import Avatar1 from '@/assets/avatars/Avatar-1.svg';
 import { NavigationTabs } from './components/NavigationTabs';
+import { UsersTable } from './components/users/UsersTable';
+import { mockUsers } from './components/users/usersData';
+import { mockDevices } from './components/devices/deviceData';
+import { DevicesTable } from './components/devices/DevicesTable';
+import { BillingsTable } from './components/billings/billingsTable';
+import { mockBillings } from './components/billings/billingsData';
+import type { User } from './components/users/types';
 
 interface OrganizationData {
   id: string;
   name: string;
   email: string;
-  address: string;
+  logo?: string;
   plan: string;
   status: string;
-  lastActive: string;
-  createdAt: string;
-  updatedAt: string;
+  lastActive?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
+type RouteState = {
+  org?: OrganizationData;
+};
+
 export function OrganizationProfile() {
-  const params = useParams({ strict: false });
-  const id = params.id;
+  const { id } = useParams({ from: '/(dashboard)/(organisation)/organisationDashboard/$id' });
   const router = useRouter();
   const { addToast } = useToast();
-  const [isLoading, setIsLoading] = useState(true);
-  const [organization, setOrganization] = useState<OrganizationData | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [organization, setOrganization] = useState<OrganizationData | null>(
+    (router.state.location.state as RouteState)?.org || null
+  );
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState('users');
   const [_searchQuery, setSearchQuery] = useState('');
-
-  console.log('Route Params:', params);
-  console.log('Organization ID:', id);
+  const [selectedUserIds, setSelectedUserIds] = useState<string[]>([]);
+  const [selectedDeviceIds, setSelectedDeviceIds] = useState<string[]>([]);
+  const [selectedBillingIds, setSelectedBillingIds] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [billingCurrentPage, setBillingCurrentPage] = useState(1);
+  const [billingPageSize, setBillingPageSize] = useState(10);
+  const [totalItems, setTotalItems] = useState(0);
+  const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
-    const fetchOrganization = async () => {
-      console.log('Fetching organization with ID:', id);
+    // If we don't have organization data in the route state, try to fetch it
+    if (!organization && id) {
+      fetchOrganization();
+    }
+  }, [id, organization]);
+
+  useEffect(() => {
+    if (activeTab === 'users') {
+      setUsers(mockUsers);
+      setTotalItems(mockUsers.length);
+    }
+  }, [activeTab]);
+
+  const fetchOrganization = async () => {
+    if (!id) {
+      setError('No organization ID provided');
+      return;
+    }
+
+    // If we already have the organization data from the route state, use it
+    const routeState = router.state.location.state as RouteState | undefined;
+    if (routeState?.org) {
+      setOrganization(routeState.org);
+      return;
+    }
+
+    // Fallback to fetching the data if not available in route state
+    setIsLoading(true);
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 100));
       
-      if (!id) {
-        console.error('No organization ID provided');
-        setError('No organization ID provided');
-        setIsLoading(false);
-        return;
-      }
-
-      try {
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 100));
-        
-        // Mock data - replace with actual API call
-        const mockOrganizations: Record<string, OrganizationData> = {
-          '1': {
-            id: '1',
-            name: 'Acme Inc',
-            email: 'contact@acme.com',
-            address: '123 Business St, Tech City',
-            plan: 'Enterprise',
-            status: 'Active',
-            lastActive: '2 hours ago',
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString()
-          },
-          '2': {
-            id: '2',
-            name: 'Globex Corp',
-            email: 'info@globex.com',
-            address: '456 Corporate Ave, Metro',
-            plan: 'Premium',
-            status: 'Active',
-            lastActive: '30 minutes ago',
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString()
-          }
-        };
-
-        console.log('Available mock organizations:', Object.keys(mockOrganizations));
-        const org = mockOrganizations[id];
-        
-        if (!org) {
-          console.error('Organization not found in mock data');
-          throw new Error(`Organization with ID ${id} not found`);
-        }
-        
-        console.log('Found organization:', org);
-        setOrganization(org);
-        setError(null);
-      } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : 'Unknown error';
-        console.error('Error fetching organization:', errorMessage);
-        setError(`Failed to load organization: ${errorMessage}`);
-        addToast({
-          title: 'Error',
-          description: `Failed to load organization: ${errorMessage}`
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchOrganization();
-  }, [id, addToast]);
+      // This would be your actual API call in a real app
+      // const response = await fetch(`/api/organizations/${id}`);
+      // const data = await response.json();
+      // setOrganization(data);
+      
+      // For now, we'll throw an error since we expect the data to come from the route state
+      throw new Error('Organization data not found in route state');
+      
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to load organization';
+      setError(errorMessage);
+      addToast({
+        title: 'Error',
+        description: errorMessage
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleBack = () => {
     router.history.back();
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    // In a real app, you would fetch the data for the new page here
+  };
+
+  const handlePageSizeChange = (size: number) => {
+    setPageSize(size);
+    setCurrentPage(1); // Reset to first page when page size changes
+    // In a real app, you would refetch the data with the new page size
+  };
+
+  const handleUserSelectionChange = (selectedIds: string[]) => {
+    setSelectedUserIds(selectedIds);
+    // You can perform actions when selection changes, like enabling/disabling buttons
   };
 
   if (isLoading) {
@@ -139,8 +156,18 @@ export function OrganizationProfile() {
         <div className="flex items-center gap-4 w-full h-20">
           <div className="flex justify-center items-center w-20 h-20 bg-zinc-100/80 rounded-lg">
             <Avatar className="w-10 h-10 rounded-full">
-              <AvatarImage src={Avatar1} alt={organization.name} />
-              <AvatarFallback>{organization.name.charAt(0)}</AvatarFallback>
+              {organization.logo ? (
+                <AvatarImage 
+                  src={organization.logo} 
+                  alt={organization.name} 
+                  className="object-cover"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-primary/10 text-primary">
+                  {organization.name.charAt(0).toUpperCase()}
+                </div>
+              )}
+              <AvatarFallback>{organization.name.charAt(0).toUpperCase()}</AvatarFallback>
             </Avatar>
           </div>
           <div className="flex flex-col justify-center gap-0.5 flex-1">
@@ -158,7 +185,7 @@ export function OrganizationProfile() {
                 </Button>
               </div>
             </div>
-            <p className="text-sm leading-5 text-zinc-500 opacity-80">View and manage organization details</p>
+            <p className="text-sm leading-5 text-zinc-500 opacity-80">{organization.email}</p>
           </div>
         </div>
       </div>
@@ -172,13 +199,42 @@ export function OrganizationProfile() {
       {/* Conditional Content Based on Active Tab */}
       <div className="mt-6">
         {activeTab === 'users' && (
-          <div>Users content will go here</div>
+          <UsersTable
+            users={users}
+            currentPage={currentPage}
+            pageSize={pageSize}
+            totalItems={totalItems}
+            selectedUserIds={selectedUserIds}
+            onPageChange={handlePageChange}
+            onPageSizeChange={handlePageSizeChange}
+            onSelectionChange={handleUserSelectionChange}
+          />
         )}
         {activeTab === 'devices' && (
-          <div>Devices content will go here</div>
+          <div className="space-y-4">
+            <DevicesTable
+              currentPage={currentPage}
+              pageSize={pageSize}
+              totalItems={totalItems}
+              onPageChange={handlePageChange}
+              onPageSizeChange={handlePageSizeChange}
+              devices={mockDevices}
+              selectedDeviceIds={selectedDeviceIds}
+              onSelectionChange={setSelectedDeviceIds}
+            />
+          </div>
         )}
         {activeTab === 'billing' && (
-          <div>Billing content will go here</div>
+          <BillingsTable
+            billings={mockBillings}
+            selectedBillingIds={selectedBillingIds}
+            onSelectionChange={setSelectedBillingIds}
+            currentPage={billingCurrentPage}
+            pageSize={billingPageSize}
+            totalItems={mockBillings.length}
+            onPageChange={setBillingCurrentPage}
+            onPageSizeChange={setBillingPageSize}
+          />
         )}
         {activeTab === 'settings' && (
           <div>Settings content will go here</div>

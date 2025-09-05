@@ -7,11 +7,4 @@ export const Route = createFileRoute(
   component: OrganizationProfile,
 })
 
-function RouteComponent() {
-  return (
-    <div>
-      Hello
-      "/(dashboard)/(organisation)/organizationProfile/organisationProfile"!
-    </div>
-  )
-}
+
