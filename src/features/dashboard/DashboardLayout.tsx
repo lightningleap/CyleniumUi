@@ -42,14 +42,8 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         />
       }
     >
-      <div className="min-h-screen relative overflow-hidden bg-white text-black">
-        {/* Background */}
-        <div
-          className="absolute inset-0 bg-center bg-no-repeat bg-cover opacity-50"
-        />
-        
-        {/* Main Content */}
-        <div className="relative z-10">
+      <div className="flex flex-col h-[calc(100vh-4rem)] bg-white">
+        <div className="flex-1 overflow-auto">
           {children}
         </div>
       </div>

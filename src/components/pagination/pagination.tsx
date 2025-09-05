@@ -30,13 +30,13 @@ export function Pagination({
     <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-2 py-4">
       {/* Mobile: Page info */}
       <div className="sm:hidden w-full flex justify-between items-center">
-        <div className="text-sm font-medium">
+        <div className="text-sm font-normal">
           Page {currentPage} of {totalPages}
         </div>
         <div className="flex items-center space-x-2">
           <Button
             variant="outline"
-            className="h-8 px-3"
+            className="h-8 px-3 font-normal"
             onClick={() => onPageChange(currentPage - 1)}
             disabled={!canPreviousPage}
           >
@@ -44,7 +44,7 @@ export function Pagination({
           </Button>
           <Button
             variant="outline"
-            className="h-8 px-3"
+            className="h-8 px-3 font-normal"
             onClick={() => onPageChange(currentPage + 1)}
             disabled={!canNextPage}
           >
@@ -54,17 +54,17 @@ export function Pagination({
       </div>
 
       {/* Desktop: Full pagination */}
-      <div className="hidden sm:flex-1 sm:flex text-sm text-muted-foreground">
+      <div className="hidden sm:flex-1 sm:flex text-sm font-normal text-muted-foreground">
         {selectedCount} of {totalItems} row(s) selected
       </div>
       <div className="hidden sm:flex items-center space-x-6 lg:space-x-8">
         <div className="flex items-center space-x-2">
-          <p className="text-sm font-medium">Rows per page</p>
+          <p className="text-sm font-normal">Rows per page</p>
           <Select
             value={`${pageSize}`}
             onValueChange={(value) => onPageSizeChange(Number(value))}
           >
-            <SelectTrigger className="h-8 w-[70px]">
+            <SelectTrigger className="h-8 w-[70px] font-normal">
               <SelectValue placeholder={pageSize} />
             </SelectTrigger>
             <SelectContent side="top">
@@ -77,7 +77,7 @@ export function Pagination({
           </Select>
         </div>
         <div className="flex items-center space-x-2">
-          <div className="hidden md:flex w-[100px] items-center justify-center text-sm font-medium">
+          <div className="hidden md:flex w-[100px] items-center justify-center text-sm font-normal">
             Page {currentPage} of {totalPages}
           </div>
           <div className="flex items-center space-x-1">

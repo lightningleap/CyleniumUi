@@ -22,8 +22,11 @@ import { Route as authSignInRouteImport } from './routes/(auth)/sign-in'
 import { Route as authMfaRouteImport } from './routes/(auth)/mfa'
 import { Route as authForgotPasswordRouteImport } from './routes/(auth)/forgotPassword'
 import { Route as dashboardorganisationOrganizationsRouteImport } from './routes/(dashboard)/(organisation)/organizations'
+import { Route as dashboardorganisationOrganisationProfileRouteImport } from './routes/(dashboard)/(organisation)/organisationProfile'
 import { Route as dashboardorganisationOrganisationDashboardRouteImport } from './routes/(dashboard)/(organisation)/organisationDashboard'
 import { Route as dashboardorganisationOrganisationDashboardNewRouteImport } from './routes/(dashboard)/(organisation)/organisationDashboard/new'
+import { Route as dashboardorganisationOrganisationDashboardIdRouteImport } from './routes/(dashboard)/(organisation)/organisationDashboard/$id'
+import { Route as dashboardorganisationOrganisationIdRouteImport } from './routes/(dashboard)/(organisation)/organisation/$id'
 
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
@@ -92,6 +95,12 @@ const dashboardorganisationOrganizationsRoute =
     path: '/organizations',
     getParentRoute: () => rootRouteImport,
   } as any)
+const dashboardorganisationOrganisationProfileRoute =
+  dashboardorganisationOrganisationProfileRouteImport.update({
+    id: '/(dashboard)/(organisation)/organisationProfile',
+    path: '/organisationProfile',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const dashboardorganisationOrganisationDashboardRoute =
   dashboardorganisationOrganisationDashboardRouteImport.update({
     id: '/(dashboard)/(organisation)/organisationDashboard',
@@ -103,6 +112,18 @@ const dashboardorganisationOrganisationDashboardNewRoute =
     id: '/new',
     path: '/new',
     getParentRoute: () => dashboardorganisationOrganisationDashboardRoute,
+  } as any)
+const dashboardorganisationOrganisationDashboardIdRoute =
+  dashboardorganisationOrganisationDashboardIdRouteImport.update({
+    id: '/$id',
+    path: '/$id',
+    getParentRoute: () => dashboardorganisationOrganisationDashboardRoute,
+  } as any)
+const dashboardorganisationOrganisationIdRoute =
+  dashboardorganisationOrganisationIdRouteImport.update({
+    id: '/(dashboard)/(organisation)/organisation/$id',
+    path: '/organisation/$id',
+    getParentRoute: () => rootRouteImport,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -119,7 +140,10 @@ export interface FileRoutesByFullPath {
   '/500': typeof errors500Route
   '/503': typeof errors503Route
   '/organisationDashboard': typeof dashboardorganisationOrganisationDashboardRouteWithChildren
+  '/organisationProfile': typeof dashboardorganisationOrganisationProfileRoute
   '/organizations': typeof dashboardorganisationOrganizationsRoute
+  '/organisation/$id': typeof dashboardorganisationOrganisationIdRoute
+  '/organisationDashboard/$id': typeof dashboardorganisationOrganisationDashboardIdRoute
   '/organisationDashboard/new': typeof dashboardorganisationOrganisationDashboardNewRoute
 }
 export interface FileRoutesByTo {
@@ -136,7 +160,10 @@ export interface FileRoutesByTo {
   '/500': typeof errors500Route
   '/503': typeof errors503Route
   '/organisationDashboard': typeof dashboardorganisationOrganisationDashboardRouteWithChildren
+  '/organisationProfile': typeof dashboardorganisationOrganisationProfileRoute
   '/organizations': typeof dashboardorganisationOrganizationsRoute
+  '/organisation/$id': typeof dashboardorganisationOrganisationIdRoute
+  '/organisationDashboard/$id': typeof dashboardorganisationOrganisationDashboardIdRoute
   '/organisationDashboard/new': typeof dashboardorganisationOrganisationDashboardNewRoute
 }
 export interface FileRoutesById {
@@ -154,7 +181,10 @@ export interface FileRoutesById {
   '/(errors)/500': typeof errors500Route
   '/(errors)/503': typeof errors503Route
   '/(dashboard)/(organisation)/organisationDashboard': typeof dashboardorganisationOrganisationDashboardRouteWithChildren
+  '/(dashboard)/(organisation)/organisationProfile': typeof dashboardorganisationOrganisationProfileRoute
   '/(dashboard)/(organisation)/organizations': typeof dashboardorganisationOrganizationsRoute
+  '/(dashboard)/(organisation)/organisation/$id': typeof dashboardorganisationOrganisationIdRoute
+  '/(dashboard)/(organisation)/organisationDashboard/$id': typeof dashboardorganisationOrganisationDashboardIdRoute
   '/(dashboard)/(organisation)/organisationDashboard/new': typeof dashboardorganisationOrganisationDashboardNewRoute
 }
 export interface FileRouteTypes {
@@ -173,7 +203,10 @@ export interface FileRouteTypes {
     | '/500'
     | '/503'
     | '/organisationDashboard'
+    | '/organisationProfile'
     | '/organizations'
+    | '/organisation/$id'
+    | '/organisationDashboard/$id'
     | '/organisationDashboard/new'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -190,7 +223,10 @@ export interface FileRouteTypes {
     | '/500'
     | '/503'
     | '/organisationDashboard'
+    | '/organisationProfile'
     | '/organizations'
+    | '/organisation/$id'
+    | '/organisationDashboard/$id'
     | '/organisationDashboard/new'
   id:
     | '__root__'
@@ -207,7 +243,10 @@ export interface FileRouteTypes {
     | '/(errors)/500'
     | '/(errors)/503'
     | '/(dashboard)/(organisation)/organisationDashboard'
+    | '/(dashboard)/(organisation)/organisationProfile'
     | '/(dashboard)/(organisation)/organizations'
+    | '/(dashboard)/(organisation)/organisation/$id'
+    | '/(dashboard)/(organisation)/organisationDashboard/$id'
     | '/(dashboard)/(organisation)/organisationDashboard/new'
   fileRoutesById: FileRoutesById
 }
@@ -225,7 +264,9 @@ export interface RootRouteChildren {
   errors500Route: typeof errors500Route
   errors503Route: typeof errors503Route
   dashboardorganisationOrganisationDashboardRoute: typeof dashboardorganisationOrganisationDashboardRouteWithChildren
+  dashboardorganisationOrganisationProfileRoute: typeof dashboardorganisationOrganisationProfileRoute
   dashboardorganisationOrganizationsRoute: typeof dashboardorganisationOrganizationsRoute
+  dashboardorganisationOrganisationIdRoute: typeof dashboardorganisationOrganisationIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -321,6 +362,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof dashboardorganisationOrganizationsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(dashboard)/(organisation)/organisationProfile': {
+      id: '/(dashboard)/(organisation)/organisationProfile'
+      path: '/organisationProfile'
+      fullPath: '/organisationProfile'
+      preLoaderRoute: typeof dashboardorganisationOrganisationProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/(dashboard)/(organisation)/organisationDashboard': {
       id: '/(dashboard)/(organisation)/organisationDashboard'
       path: '/organisationDashboard'
@@ -335,15 +383,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof dashboardorganisationOrganisationDashboardNewRouteImport
       parentRoute: typeof dashboardorganisationOrganisationDashboardRoute
     }
+    '/(dashboard)/(organisation)/organisationDashboard/$id': {
+      id: '/(dashboard)/(organisation)/organisationDashboard/$id'
+      path: '/$id'
+      fullPath: '/organisationDashboard/$id'
+      preLoaderRoute: typeof dashboardorganisationOrganisationDashboardIdRouteImport
+      parentRoute: typeof dashboardorganisationOrganisationDashboardRoute
+    }
+    '/(dashboard)/(organisation)/organisation/$id': {
+      id: '/(dashboard)/(organisation)/organisation/$id'
+      path: '/organisation/$id'
+      fullPath: '/organisation/$id'
+      preLoaderRoute: typeof dashboardorganisationOrganisationIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 interface dashboardorganisationOrganisationDashboardRouteChildren {
+  dashboardorganisationOrganisationDashboardIdRoute: typeof dashboardorganisationOrganisationDashboardIdRoute
   dashboardorganisationOrganisationDashboardNewRoute: typeof dashboardorganisationOrganisationDashboardNewRoute
 }
 
 const dashboardorganisationOrganisationDashboardRouteChildren: dashboardorganisationOrganisationDashboardRouteChildren =
   {
+    dashboardorganisationOrganisationDashboardIdRoute:
+      dashboardorganisationOrganisationDashboardIdRoute,
     dashboardorganisationOrganisationDashboardNewRoute:
       dashboardorganisationOrganisationDashboardNewRoute,
   }
@@ -368,8 +433,12 @@ const rootRouteChildren: RootRouteChildren = {
   errors503Route: errors503Route,
   dashboardorganisationOrganisationDashboardRoute:
     dashboardorganisationOrganisationDashboardRouteWithChildren,
+  dashboardorganisationOrganisationProfileRoute:
+    dashboardorganisationOrganisationProfileRoute,
   dashboardorganisationOrganizationsRoute:
     dashboardorganisationOrganizationsRoute,
+  dashboardorganisationOrganisationIdRoute:
+    dashboardorganisationOrganisationIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

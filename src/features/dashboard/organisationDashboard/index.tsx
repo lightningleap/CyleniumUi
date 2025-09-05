@@ -1,30 +1,9 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from '@tanstack/react-router';
 import { DashboardLayout } from '../DashboardLayout';
-import { Search, Filter, Plus, ChevronUp, ChevronDown } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Pagination } from '@/components/pagination';
-
-type Organization = {
-  id: string;
-  name: string;
-  email: string;
-  logo: string;
-  plan: 'Basic' | 'Standard' | 'Premium' | 'Pro' | 'Enterprise';
-  status: 'Active' | 'Inactive' | 'Pending';
-  lastActive: string;
-};
+import { OrganizationTable } from './components/OrganizationTable';
+import { SearchAndFilter } from './components/SearchAndFilter';
+import type { Organization } from './components/OrganizationTable';
 
 export default function OrganizationDashboard() {
   const navigate = useNavigate();
@@ -37,6 +16,9 @@ export default function OrganizationDashboard() {
 
   // Check if we're on the new organization route
   const isNewOrgRoute = location.pathname.endsWith('/new');
+
+  // Check if we're on the organization profile route
+  const isProfileRoute = location.pathname.includes('/organisationDashboard/');
 
   // Sample data - replace with your actual data
   const allOrganizations: Organization[] = [
@@ -140,9 +122,40 @@ export default function OrganizationDashboard() {
   // Search state
   const [searchTerm, setSearchTerm] = useState('');
 
+  // Add sorting state
+  const [sortConfig, setSortConfig] = useState<{
+    key: keyof Organization;
+    direction: 'ascending' | 'descending';
+  }>({ key: 'name', direction: 'ascending' });
+
+  // Handle sort request
+  const handleSort = (key: keyof Organization) => {
+    setSortConfig(prev => ({
+      key,
+      direction: prev.key === key && prev.direction === 'ascending' ? 'descending' : 'ascending'
+    }));
+  };
+
+  // Sort organizations
+  const sortedOrganizations = useMemo(() => {
+    const sortableItems = [...allOrganizations];
+    if (sortConfig.key) {
+      sortableItems.sort((a, b) => {
+        if (a[sortConfig.key] < b[sortConfig.key]) {
+          return sortConfig.direction === 'ascending' ? -1 : 1;
+        }
+        if (a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === 'ascending' ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return sortableItems;
+  }, [allOrganizations, sortConfig]);
+
   // Filter and paginate data
-  const { filteredOrganizations, pageCount } = useMemo(() => {
-    const filtered = allOrganizations.filter(org => 
+  const { filteredOrganizations, pageCount, totalItems } = useMemo(() => {
+    const filtered = sortedOrganizations.filter(org => 
       org.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       org.email.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -156,7 +169,7 @@ export default function OrganizationDashboard() {
       pageCount,
       totalItems: filtered.length
     };
-  }, [allOrganizations, searchTerm, pageIndex, pageSize]);
+  }, [sortedOrganizations, searchTerm, pageIndex, pageSize]);
 
   // Handle row selection
   const toggleRowSelection = (id: string) => {
@@ -180,7 +193,7 @@ export default function OrganizationDashboard() {
 
   // Handle page change
   const handlePageChange = (newPage: number) => {
-    setPageIndex(newPage - 1);
+    setPageIndex(newPage);
   };
 
   // Handle page size change
@@ -189,167 +202,46 @@ export default function OrganizationDashboard() {
     setPageIndex(0); // Reset to first page when page size changes
   };
 
-  const handleNewOrganizationClick = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const handleNewOrganizationClick = () => {
     navigate({ to: '/organisationDashboard/new' });
+  };
+
+  const handleRowClick = (id: string) => {
+    navigate({ to: '/organisationDashboard/$id', params: { id } });
   };
 
   return (
     <DashboardLayout>
       <div className="flex flex-col h-[calc(100vh-4rem)] w-full">
-        {isNewOrgRoute ? (
+        {isNewOrgRoute || isProfileRoute ? (
           <Outlet />
         ) : (
-          <div className="flex-1 flex flex-col p-4 md:p-6 overflow-hidden">
-            {/* Organization List */}
-            <div className="flex-1 flex flex-col p-4 md:p-6 overflow-hidden">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
-                <div>
-                  <h1 className="text-2xl font-bold">Organizations</h1>
-                </div>
-              </div>
-              {/* Header with search and actions */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-                <div className="flex flex-1 md:max-w-md gap-2">
-                  <div className="relative flex-1">
-                    <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                    <Input
-                      type="search"
-                      placeholder="Search organizations..."
-                      className="pl-9 w-full"
-                      value={searchTerm}
-                      onChange={(e) => {
-                        setSearchTerm(e.target.value);
-                        setPageIndex(0); // Reset to first page when searching
-                      }}
-                    />
-                  </div>
-                  <Button variant="outline" size="icon" className="shrink-0">
-                    <Filter className="h-4 w-4" />
-                    <span className="sr-only">Filter</span>
-                  </Button>
-                </div>
-                <Button 
-                  variant="bluebutton" 
-                  className="w-full md:w-auto mt-2 md:mt-0"
-                  onClick={handleNewOrganizationClick}
-                >
-                  <Plus className="mr-2 h-4 w-4" />
-                  New Organization
-                </Button>
-              </div>
-              {/* Table Container */}
-              <div className="flex flex-col h-[calc(100vh-250px)] min-h-[400px] rounded-lg border shadow-sm">
-                <div className="flex-1 overflow-auto">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead className="w-[50px] text-left px-3 py-3">
-                          <Checkbox 
-                            checked={selectedRows.size === filteredOrganizations.length && filteredOrganizations.length > 0}
-                            onCheckedChange={toggleSelectAll}
-                            aria-label="Select all"
-                          />
-                        </TableHead>
-                        <TableHead className="w-[300px] text-left px-3 py-3">
-                          <div className="flex items-center gap-2">
-                            Organization
-                            <div className="flex flex-col">
-                              <ChevronUp className="h-3 w-3 mb-0.1" />
-                              <ChevronDown className="h-3 w-3 -mt-1" />
-                            </div>
-                          </div>
-                        </TableHead>
-                        <TableHead className="text-left px-3 py-3">
-                          <div className="flex items-center gap-2">
-                            Plan
-                            <div className="flex flex-col">
-                              <ChevronUp className="h-3 w-3 mb-0.1" />
-                              <ChevronDown className="h-3 w-3 -mt-1" />
-                            </div>
-                          </div>
-                        </TableHead>
-                        <TableHead className="text-left px-3 py-3">
-                          <div className="flex items-center gap-2">
-                            Status
-                            <div className="flex flex-col">
-                              <ChevronUp className="h-3 w-3 mb-0.1" />
-                              <ChevronDown className="h-3 w-3 -mt-1" />
-                            </div>
-                          </div>
-                        </TableHead>
-                        <TableHead className="text-left px-3 py-3">
-                          <div className="flex items-center gap-2">
-                            Last Active
-                            <div className="flex flex-col">
-                              <ChevronUp className="h-3 w-3 mb-0.1" />
-                              <ChevronDown className="h-3 w-3 -mt-1" />
-                            </div>
-                          </div>
-                        </TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {filteredOrganizations.map((org) => (
-                        <TableRow key={org.id}>
-                          <TableCell className="text-left px-3 py-3">
-                            <Checkbox 
-                              checked={selectedRows.has(org.id)}
-                              onCheckedChange={() => toggleRowSelection(org.id)}
-                              aria-label={`Select ${org.name}`}
-                            />
-                          </TableCell>
-                          <TableCell className="text-left px-3 py-3">
-                            <div className="flex items-center gap-3">
-                              <Avatar className="h-8 w-8">
-                                <AvatarImage src={org.logo} alt={org.name} />
-                                <AvatarFallback>{org.name.charAt(0)}</AvatarFallback>
-                              </Avatar>
-                              <div className="flex flex-col">
-                                <span className="font-medium">{org.name}</span>
-                                <span className="text-sm text-muted-foreground">{org.email}</span>
-                              </div>
-                            </div>
-                          </TableCell>
-                          <TableCell className="text-left px-3 py-3">
-                            <span className="px-2 py-1 text-xs font-medium rounded-full text-primary">
-                              {org.plan} Plan
-                            </span>
-                          </TableCell>
-                          <TableCell className="text-left px-3 py-3">
-                            <div className="flex items-center">
-                              <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${
-                                org.status === 'Active' ? 'bg-green-500 text-white' :
-                                org.status === 'Inactive' ? 'bg-gray-200 text-gray-800' :
-                                'bg-orange-500 text-white'
-                              }`}>
-                                {org.status}
-                              </span>
-                            </div>
-                          </TableCell>
-                          <TableCell className="text-left px-3 py-3 text-muted-foreground">
-                            {org.lastActive}
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </div>
-                {/* Pagination */}
-                <div className="border-t bg-background px-4 py-3">
-                  <Pagination
-                    currentPage={pageIndex + 1}
-                    totalPages={pageCount}
-                    pageSize={pageSize}
-                    totalItems={allOrganizations.length}
-                    selectedCount={selectedRows.size}
-                    onPageChange={handlePageChange}
-                    onPageSizeChange={handlePageSizeChange}
-                    pageSizeOptions={[5, 10, 20, 50, 100]}
-                  />
-                </div>
-              </div>
+          <div className="flex-1 space-y-4 p-8 pt-6">
+            <div className="flex items-center justify-between space-y-2">
+              <h2 className="text-3xl font-bold tracking-tight">Organizations</h2>
             </div>
+            
+            <SearchAndFilter 
+              searchTerm={searchTerm}
+              onSearchChange={setSearchTerm}
+              onNewOrganization={handleNewOrganizationClick}
+            />
+            
+            <OrganizationTable
+              organizations={filteredOrganizations}
+              selectedRows={selectedRows}
+              onSelectRow={toggleRowSelection}
+              onSelectAll={toggleSelectAll}
+              onRowClick={handleRowClick}
+              pageIndex={pageIndex}
+              pageSize={pageSize}
+              pageCount={pageCount}
+              totalItems={filteredOrganizations.length}
+              onPageChange={handlePageChange}
+              onPageSizeChange={handlePageSizeChange}
+              sortConfig={sortConfig}
+              onSort={handleSort}
+            />
           </div>
         )}
       </div>
