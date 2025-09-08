@@ -59,7 +59,7 @@ export function OrganizationTable({
     children: React.ReactNode 
   }) => (
     <TableHead 
-      className="cursor-pointer hover:bg-gray-50"
+      className="cursor-pointer hover:bg-gray-50 dark:hover:bg-[#27272A]"
       onClick={() => onSort(columnKey)}
     >
       <div className="flex items-center">
@@ -101,7 +101,7 @@ export function OrganizationTable({
               organizations.map((org) => (
                 <TableRow 
                   key={org.id}
-                  className={onRowClick ? 'cursor-pointer hover:bg-gray-50' : ''}
+                  className={onRowClick ? 'cursor-pointer hover:bg-gray-50 dark:hover:bg-[#27272A]' : ''}
                   onClick={(e) => {
                     // Don't trigger row click if clicking on checkbox
                     if (!(e.target as HTMLElement).closest('input[type="checkbox"]') && onRowClick) {
@@ -124,7 +124,7 @@ export function OrganizationTable({
                       </Avatar>
                       <div>
                         <div className="font-medium">{org.name}</div>
-                        <div className="text-sm text-muted-foreground">{org.email}</div>
+                        <div className="text-sm dark:text-[#A1A1AA] font-normal">{org.email}</div>
                       </div>
                     </div>
                   </TableCell>

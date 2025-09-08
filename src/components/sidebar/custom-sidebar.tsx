@@ -46,7 +46,7 @@ import {
 
 import { Badge } from '@/components/ui/badge';
 // import { SetNewPasswordDialog } from '@/components/dialogs/set-new-password-dialog';
-import lightLogo from '@/assets/SidebarHeaderLogo.svg';
+import lightLogo from '@/assets/sidebarDarkModeLogo.svg';
 import darkLogo from '@/assets/SidebarHeaderLogo.svg';
 
 // Types are now imported from './types'
@@ -125,7 +125,7 @@ const NavItem = ({
           <CollapsibleTrigger asChild>
             <SidebarMenuButton 
               isActive={isActive}
-              className="w-full justify-between"
+              className="w-full justify-between data-[active=true]:bg-[#27272A] data-[active=true]:text-white"
               tooltip={item.title}
             >
               <div className="flex items-center gap-2 min-w-0">
@@ -143,7 +143,7 @@ const NavItem = ({
                   <SidebarMenuSubButton
                     isActive={currentPath === subItem.href}
                     onClick={() => onNavigate(subItem.href)}
-                    className="w-full justify-between"
+                    className="w-full justify-between data-[active=true]:bg-[#27272A] data-[active=true]:text-white"
                   >
                     <div className="flex items-center gap-2 min-w-0">
                       {subItem.icon}
@@ -170,7 +170,7 @@ const NavItem = ({
         isActive={currentPath === item.href}
         onClick={() => onNavigate(item.href)}
         tooltip={item.title}
-        className="w-full justify-between"
+        className="w-full justify-between data-[active=true]:bg-[#27272A] data-[active=true]:text-white"
       >
         <div className="flex items-center gap-2">
           {item.icon}
@@ -219,7 +219,7 @@ const NavMain = ({
 
 const NavUser = ({ onUserAction }: { onUserAction: (action: string) => void }) => {
   const navigate = useNavigate();
-  const [showPasswordDialog, setShowPasswordDialog] = useState(false);
+  const [_showPasswordDialog, setShowPasswordDialog] = useState(false);
   const user = {
     name: "John Doe",
     email: "john@aegismind.com",
@@ -351,21 +351,21 @@ export function AppSidebar() {
           className="flex flex-col items-start justify-center p-2 w-full h-[45.91px] rounded-md flex-none order-0 self-stretch flex-grow-0 z-0 group-data-[collapsible=icon]:w-10 group-data-[collapsible=icon]:h-10 group-data-[collapsible=icon]:p-0"
         >
           {/* Logo container */}
-          <div className="flex items-center justify-start mb-1 group-data-[collapsible=icon]:mb-0">
+          <div className="flex items-center justify-start mb-1 group-data-[collapsible=icon]:mb-0 ">
             <img
               src={lightLogo}
               alt="Logo"
-              className="h-5 w-auto dark:hidden group-data-[collapsible=icon]:h-6"
+              className="h-5 w-auto group-data-[collapsible=icon]:h-6 dark:block"
             />
             <img
               src={darkLogo}
               alt="Logo"
-              className="h-5 w-auto hidden dark:block group-data-[collapsible=icon]:h-6"
+              className="h-5 w-auto hidden group-data-[collapsible=icon]:h-6 dark:hidden"
             />
           </div>
           
           {/* Control Center text - hidden when collapsed */}
-          <span className="font-inter font-normal text-[9px] leading-[17px] tracking-[0.1em] uppercase text-[#3F3F46] group-data-[collapsible=icon]:hidden">
+          <span className="font-inter font-normal text-[9px] leading-[17px] tracking-[0.1em] uppercase text-[#3F3F46] group-data-[collapsible=icon]:hidden dark:text-white">
             Control Center
           </span>
         </button>

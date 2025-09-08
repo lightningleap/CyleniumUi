@@ -42,7 +42,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         />
       }
     >
-      <div className="flex flex-col h-[calc(100vh-4rem)] bg-white">
+      <div className="flex flex-col h-[calc(100vh-4rem)] bg-white dark:bg-[#09090B]">
         <div className="flex-1 overflow-auto">
           {children}
         </div>

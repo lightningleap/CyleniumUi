@@ -6,6 +6,11 @@ import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
+type NewUserFormProps = {
+  onCancel: () => void;
+  onSubmit: (values: NewUserFormValues) => void;
+};
+
 const formSchema = z.object({
   name: z.string().min(2, {
     message: 'Name must be at least 2 characters.',
@@ -18,7 +23,7 @@ const formSchema = z.object({
 
 type NewUserFormValues = z.infer<typeof formSchema>;
 
-export function NewUserForm() {
+export function NewUserForm({ onCancel, onSubmit }: NewUserFormProps) {
   const form = useForm<NewUserFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -28,14 +33,9 @@ export function NewUserForm() {
     },
   });
 
-  function onSubmit(values: NewUserFormValues) {
-    // Handle form submission
-    console.log(values);
-  }
-
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 dark:bg-[#09090B]">
         <FormField
           control={form.control}
           name="name"
@@ -43,7 +43,7 @@ export function NewUserForm() {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder="Enter full name" {...field} />
+                <Input placeholder="Enter full name" {...field} className="dark:bg-[#09090B] dark:border-[#3F3F46] dark:text-white" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -57,7 +57,7 @@ export function NewUserForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="Enter email address" type="email" {...field} />
+                <Input placeholder="Enter email address" type="email" {...field} className="dark:bg-[#09090B] dark:border-[#3F3F46] dark:text-white" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -72,13 +72,13 @@ export function NewUserForm() {
               <FormLabel>Role</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger className="dark:bg-[#09090B] dark:border-[#3F3F46] dark:text-white">
                     <SelectValue placeholder="Select a role" />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent>
-                  <SelectItem value="admin">Admin</SelectItem>
-                  <SelectItem value="general">General User</SelectItem>
+                <SelectContent className="dark:bg-[#09090B] dark:border-[#3F3F46]">
+                  <SelectItem value="admin" className="dark:hover:bg-[#27272A]">Admin</SelectItem>
+                  <SelectItem value="general" className="dark:hover:bg-[#27272A]">General User</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -86,8 +86,8 @@ export function NewUserForm() {
           )}
         />
 
-        <div className="flex justify-end space-x-3 pt-4">
-          <Button type="button" variant="outline">
+        <div className="flex justify-between pt-4">
+          <Button type="button" variant="outline" onClick={onCancel} className="dark:border-[#3F3F46] dark:text-white">
             Cancel
           </Button>
           <Button type="submit" variant="bluebutton">

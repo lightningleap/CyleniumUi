@@ -174,7 +174,7 @@ export function BillingsTable({
                       className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                         billing.status === 'paid' 
                           ? 'bg-green-500 text-white' 
-                          : 'bg-gray-50 text-black'
+                          : 'bg-gray-50 text-black dark:bg-[#27272A] dark:text-white'
                       }`}
                     >
                       {billing.status.charAt(0).toUpperCase() + billing.status.slice(1)}

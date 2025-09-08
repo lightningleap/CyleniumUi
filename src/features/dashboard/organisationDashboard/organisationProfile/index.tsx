@@ -154,7 +154,7 @@ export function OrganizationProfile() {
           <span className="text-xs font-medium leading-4 tracking-[-0.006em]">Back to Organizations</span>
         </div>
         <div className="flex items-center gap-4 w-full h-20">
-          <div className="flex justify-center items-center w-20 h-20 bg-zinc-100/80 rounded-lg">
+          <div className="flex justify-center items-center w-20 h-20 bg-zinc-100/80 rounded-lg dark:bg-[#27272A]">
             <Avatar className="w-10 h-10 rounded-full">
               {organization.logo ? (
                 <AvatarImage 
@@ -163,7 +163,7 @@ export function OrganizationProfile() {
                   className="object-cover"
                 />
               ) : (
-                <div className="w-full h-full flex items-center justify-center bg-primary/10 text-primary">
+                <div className="w-full h-full flex items-center justify-center bg-primary/10 text-primary dark:text-white">
                   {organization.name.charAt(0).toUpperCase()}
                 </div>
               )}
@@ -172,15 +172,15 @@ export function OrganizationProfile() {
           </div>
           <div className="flex flex-col justify-center gap-0.5 flex-1">
             <div className="flex items-center justify-between w-full">
-              <h1 className="text-2xl font-semibold leading-8 tracking-[-0.006em] text-zinc-900">{organization.name}</h1>
+              <h1 className="text-2xl font-semibold leading-8 tracking-[-0.006em] text-zinc-900 dark:text-white">{organization.name}</h1>
               <div className="hidden md:block">
-                <Button variant="outline" className="h-9 px-4 border border-zinc-200 rounded-md">
-                  <span className="text-sm font-medium leading-5 tracking-[-0.006em] text-zinc-900">Actions</span>
+                <Button variant="outline" className="h-9 px-4 border border-zinc-200 rounded-md dark:border-[#3F3F46]">
+                  <span className="text-sm font-medium leading-5 tracking-[-0.006em] text-zinc-900 dark:text-white">Actions</span>
                   <ChevronDown className="w-4 h-4 ml-1" />
                 </Button>
               </div>
               <div className="block md:hidden">
-                <Button variant="outline" size="icon" className="h-9 w-9 border border-zinc-200">
+                <Button variant="outline" size="icon" className="h-9 w-9 border border-zinc-200 dark:border-[#3F3F46]">
                   <MoreHorizontal className="h-4 w-4 text-zinc-900" />
                 </Button>
               </div>

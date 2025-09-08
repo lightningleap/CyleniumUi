@@ -122,7 +122,7 @@ export function NewOrganizationForm() {
   };
 
   return (
-    <div className="mx-auto p-6 bg-white sm:w-[560px] w-full">
+    <div className="mx-auto p-6 bg-white sm:w-[560px] w-full dark:bg-[#09090B]">
       <div className="flex flex-col gap-1 mb-5">
         <h1 className="text-2xl font-bold">Create Organization</h1>
         <p className="text-sm text-gray-500">Fill in the details below to create a new organization.</p>
@@ -198,7 +198,7 @@ export function NewOrganizationForm() {
               value={formData.address}
               onChange={handleChange}
               placeholder="Enter organization address" 
-              className="min-h-[80px]"
+              className="min-h-[80px] dark:bg-[#09090B]"
             />
           </div>
         </div>
@@ -208,7 +208,7 @@ export function NewOrganizationForm() {
             type="button" 
             variant="outline"
             onClick={handleCancel}
-            className="px-6"
+            className="px-6 dark:bg-[#09090B]"
             disabled={isSubmitting}
           >
             Cancel

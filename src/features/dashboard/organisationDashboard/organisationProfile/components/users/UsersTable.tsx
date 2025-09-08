@@ -89,7 +89,7 @@ export function UsersTable({
       case 'active':
         return { variant: 'default', className: 'bg-green-600 hover:bg-green-700 text-white rounded-full' };
       case 'inactive':
-        return { variant: 'secondary', className: 'bg-gray-200 hover:bg-gray-300 text-gray-900 rounded-full' };
+        return { variant: 'secondary', className: 'bg-gray-200 hover:bg-gray-300 text-gray-900 rounded-full dark:bg-[#27272A] dark:text-white' };
       case 'pending':
         return { variant: 'default', className: 'bg-orange-500 hover:bg-orange-600 text-white rounded-full' };
     }
@@ -193,7 +193,7 @@ export function UsersTable({
                   {user.status}
                 </Badge>
               </TableCell>
-              <TableCell className="text-left text-muted-foreground">
+              <TableCell className="text-left text-muted-foreground dark:text-white">
                 {user.lastActive}
               </TableCell>
             </TableRow>

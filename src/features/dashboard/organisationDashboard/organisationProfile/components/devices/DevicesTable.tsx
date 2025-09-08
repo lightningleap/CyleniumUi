@@ -158,7 +158,7 @@ export function DevicesTable({
                         className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                           device.status === 'active' 
                             ? 'bg-green-500 text-white' 
-                            : 'bg-gray-50 text-black'
+                            : 'bg-gray-50 text-black dark:bg-[#27272A] dark:text-white'
                         }`}
                       >
                         {device.status.charAt(0).toUpperCase() + device.status.slice(1)}
