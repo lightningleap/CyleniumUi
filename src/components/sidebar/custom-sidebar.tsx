@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useRouter } from '@tanstack/react-router';
@@ -46,8 +47,8 @@ import {
 
 import { Badge } from '@/components/ui/badge';
 // import { SetNewPasswordDialog } from '@/components/dialogs/set-new-password-dialog';
-import lightLogo from '@/assets/sidebarDarkModeLogo.svg';
-import darkLogo from '@/assets/SidebarHeaderLogo.svg';
+import lightLogo from '@/assets/SidebarHeaderLogo.svg';
+import darkLogo from '@/assets/sidebarDarkModeLogo.svg';
 
 // Types are now imported from './types'
 
@@ -125,7 +126,7 @@ const NavItem = ({
           <CollapsibleTrigger asChild>
             <SidebarMenuButton 
               isActive={isActive}
-              className="w-full justify-between data-[active=true]:bg-[#27272A] data-[active=true]:text-white"
+              className="w-full justify-between data-[active=true]:bg-[#F4F4F5] dark:data-[active=true]:bg-[#27272A] data-[active=true]:text-[#18181B] dark:data-[active=true]:text-white"
               tooltip={item.title}
             >
               <div className="flex items-center gap-2 min-w-0">
@@ -143,7 +144,7 @@ const NavItem = ({
                   <SidebarMenuSubButton
                     isActive={currentPath === subItem.href}
                     onClick={() => onNavigate(subItem.href)}
-                    className="w-full justify-between data-[active=true]:bg-[#27272A] data-[active=true]:text-white"
+                    className="w-full justify-between data-[active=true]:bg-[#F4F4F5] dark:data-[active=true]:bg-[#27272A] data-[active=true]:text-[#18181B] dark:data-[active=true]:text-white"
                   >
                     <div className="flex items-center gap-2 min-w-0">
                       {subItem.icon}
@@ -170,7 +171,7 @@ const NavItem = ({
         isActive={currentPath === item.href}
         onClick={() => onNavigate(item.href)}
         tooltip={item.title}
-        className="w-full justify-between data-[active=true]:bg-[#27272A] data-[active=true]:text-white"
+        className="w-full justify-between data-[active=true]:bg-[#F4F4F5] dark:data-[active=true]:bg-[#27272A] data-[active=true]:text-[#18181B] dark:data-[active=true]:text-white"
       >
         <div className="flex items-center gap-2">
           {item.icon}
@@ -345,27 +346,27 @@ export function AppSidebar() {
       className="bg-[#FAFAFA] dark:bg-[#18181B]"
     >
       {/* Logo Header */}
-      <SidebarHeader className="flex flex-col justify-center items-start p-2 gap-2 w-full h-[61.91px] rounded-none flex-none order-0 self-stretch flex-grow-0 z-[3] isolate">
+      <SidebarHeader className="flex flex-col justify-center items-start p-2 gap-2 w-full h-[61.91px] rounded-none flex-none order-0 self-stretch flex-grow-0 z-[3] isolate bg-[#FAFAFA] dark:bg-[#18181B]">
         <button 
           onClick={() => navigateTo('/organisationDashboard')}
-          className="flex flex-col items-start justify-center p-2 w-full h-[45.91px] rounded-md flex-none order-0 self-stretch flex-grow-0 z-0 group-data-[collapsible=icon]:w-10 group-data-[collapsible=icon]:h-10 group-data-[collapsible=icon]:p-0"
+          className="flex flex-col items-start justify-center p-2 w-full h-[45.91px] rounded-md flex-none order-0 self-stretch flex-grow-0 z-0 group-data-[collapsible=icon]:w-10 group-data-[collapsible=icon]:h-10 group-data-[collapsible=icon]:p-0 hover:bg-[#F4F4F5] dark:hover:bg-[#27272A]"
         >
           {/* Logo container */}
           <div className="flex items-center justify-start mb-1 group-data-[collapsible=icon]:mb-0 ">
             <img
               src={lightLogo}
               alt="Logo"
-              className="h-5 w-auto group-data-[collapsible=icon]:h-6 dark:block"
+              className="h-5 w-auto group-data-[collapsible=icon]:h-6 dark:block dark:hidden"
             />
             <img
               src={darkLogo}
               alt="Logo"
-              className="h-5 w-auto hidden group-data-[collapsible=icon]:h-6 dark:hidden"
+              className="h-5 w-auto group-data-[collapsible=icon]:h-6 "
             />
           </div>
           
           {/* Control Center text - hidden when collapsed */}
-          <span className="font-inter font-normal text-[9px] leading-[17px] tracking-[0.1em] uppercase text-[#3F3F46] group-data-[collapsible=icon]:hidden dark:text-white">
+          <span className="font-inter font-normal text-[9px] leading-[17px] tracking-[0.1em] uppercase text-[#3F3F46] dark:text-[#A1A1AA] group-data-[collapsible=icon]:hidden">
             Control Center
           </span>
         </button>

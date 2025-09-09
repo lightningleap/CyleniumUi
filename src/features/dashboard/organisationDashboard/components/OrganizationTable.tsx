@@ -78,11 +78,11 @@ export function OrganizationTable({
 
   return (
     <div>
-      <div className="rounded-md border">
+      <div>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-12">
+              <TableHead className=" flex justify-center items-center">
                 <Checkbox
                   checked={allSelected}
                   onCheckedChange={onSelectAll}
@@ -109,7 +109,7 @@ export function OrganizationTable({
                     }
                   }}
                 >
-                  <TableCell>
+                  <TableCell className=" flex justify-center items-center">
                     <Checkbox
                       checked={selectedRows.has(org.id)}
                       onCheckedChange={() => onSelectRow(org.id)}
@@ -154,10 +154,7 @@ export function OrganizationTable({
         </Table>
       </div>
       
-      <div className="flex items-center justify-between">
-        <div className="text-sm text-muted-foreground">
-          {selectedRows.size} of {totalItems} row(s) selected.
-        </div>
+
         <Pagination
           currentPage={pageIndex + 1}
           totalPages={pageCount}
@@ -167,7 +164,6 @@ export function OrganizationTable({
           totalItems={totalItems}
           selectedCount={selectedRows.size}
         />
-      </div>
     </div>
   );
 }

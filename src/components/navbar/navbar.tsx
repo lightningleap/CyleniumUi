@@ -39,13 +39,11 @@ export function Navbar({
 
   return (
     <nav className={`sticky top-0 z-40 w-full border-b bg-background dark:bg-[#09090B] ${className}`}>
-      <div className="relative flex h-16 items-center justify-between px-4">
-        <div className="flex items-center gap-2">
-          <div className="flex items-center">
-            <SidebarTrigger className="-ml-2">
-              <Menu className="h-5 w-5" />
-            </SidebarTrigger>
-          </div>
+      <div className="relative flex h-16 items-center justify-between px-4 sm:px-6">
+        <div className="flex items-center gap-3">
+          <SidebarTrigger className="-ml-1.5 md:-ml-2">
+            <Menu className="h-5 w-5" />
+          </SidebarTrigger>
           
           {/* Breadcrumbs */}
           {breadcrumb.length > 0 && (
@@ -74,25 +72,27 @@ export function Navbar({
 
         {/* Mobile Logo */}
         <div className="absolute left-1/2 -translate-x-1/2 md:hidden">
-          <div className="h-6">
-            <img 
-              src={lightLogo} 
-              alt="Logo" 
-              className="h-full w-auto object-contain dark:hidden"
-            />
-            <img 
-              src={darkLogo} 
-              alt="Logo" 
-              className="hidden h-full w-auto object-contain dark:block"
-            />
-            <span className="font-inter font-normal text-[9px] leading-[17px] tracking-[0.1em] uppercase text-[#3F3F46] group-data-[collapsible=icon]:hidden dark:text-white">
-              Administrator Center
+          <div className="flex flex-col items-center">
+            <div className="h-5">
+              <img 
+                src={lightLogo} 
+                alt="Logo" 
+                className="h-full w-auto object-contain dark:hidden"
+              />
+              <img 
+                src={darkLogo} 
+                alt="Logo" 
+                className="hidden h-full w-auto object-contain dark:block"
+              />
+            </div>
+            <span className="mt-0.5 font-inter font-normal text-[9px] leading-[10px] tracking-[0.1em] uppercase text-[#3F3F46] dark:text-white">
+              Control Centre
             </span>
           </div>
         </div>
         
         {/* Right side items */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 sm:gap-2">
           {/* Theme Toggle */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

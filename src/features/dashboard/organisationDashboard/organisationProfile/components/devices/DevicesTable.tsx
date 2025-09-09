@@ -3,6 +3,14 @@ import { ChevronDown, ChevronUp, ChevronsUpDown } from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { Pagination } from '@/components/pagination/pagination';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import type { Device } from './deviceData';
 
 interface DevicesTableProps {
@@ -80,107 +88,105 @@ export function DevicesTable({
   const totalPages = Math.ceil(totalItems / pageSize);
 
   return (
-    <div className="space-y-4">
-      <div className="rounded-md border">
-        <div className="relative w-full overflow-auto">
-          <table className="w-full caption-bottom text-sm">
-            <thead className="[&_tr]:border-b">
-              <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="select-all"
-                      checked={selectedDeviceIds.length === devices.length && devices.length > 0}
-                      onCheckedChange={checked => toggleSelectAll(!!checked)}
-                      aria-label="Select all"
-                    />
-                  </div>
-                </th>
-                <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
-                  <Button
-                    variant="ghost"
-                    className="p-0 font-medium hover:bg-transparent"
-                    onClick={() => handleSort('deviceId')}
-                  >
-                    Device ID
-                    {renderSortIcon('deviceId')}
-                  </Button>
-                </th>
-                <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
-                  <Button
-                    variant="ghost"
-                    className="p-0 font-medium hover:bg-transparent"
-                    onClick={() => handleSort('name')}
-                  >
-                    Name
-                    {renderSortIcon('name')}
-                  </Button>
-                </th>
-                <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
-                  <Button
-                    variant="ghost"
-                    className="p-0 font-medium hover:bg-transparent"
-                    onClick={() => handleSort('type')}
-                  >
-                    Type
-                    {renderSortIcon('type')}
-                  </Button>
-                </th>
-                <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
-                  <Button
-                    variant="ghost"
-                    className="p-0 font-medium hover:bg-transparent"
-                    onClick={() => handleSort('status')}
-                  >
-                    Status
-                    {renderSortIcon('status')}
-                  </Button>
-                </th>
-              </tr>
-            </thead>
-            <tbody className="[&_tr:last-child]:border-0">
-              {sortedDevices.map(device => (
-                <tr key={device.id} className="border-b transition-colors hover:bg-muted/50">
-                  <td className="p-4 align-middle">
-                    <Checkbox
-                      id={`device-${device.id}`}
-                      checked={selectedDeviceIds.includes(device.id)}
-                      onCheckedChange={checked => toggleSelectDevice(device.id, !!checked)}
-                      aria-label={`Select ${device.name}`}
-                    />
-                  </td>
-                  <td className="p-4 align-middle font-medium">{device.deviceId}</td>
-                  <td className="p-4 align-middle">{device.name}</td>
-                  <td className="p-4 align-middle">{device.type}</td>
-                  <td className="p-4 align-middle">
-                    <div className="flex items-center">
-                      <span 
-                        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                          device.status === 'active' 
-                            ? 'bg-green-500 text-white' 
-                            : 'bg-gray-50 text-black dark:bg-[#27272A] dark:text-white'
-                        }`}
-                      >
-                        {device.status.charAt(0).toUpperCase() + device.status.slice(1)}
-                      </span>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+    <div>
+      <div className="rounded-md border dark:border-[#27272A]">
+        <Table>
+          <TableHeader>
+            <TableRow className="hover:bg-transparent dark:hover:bg-transparent">
+              <TableHead className="w-[48px] h-[48px]">
+                <Checkbox
+                  id="select-all"
+                  checked={selectedDeviceIds.length === devices.length && devices.length > 0}
+                  onCheckedChange={checked => toggleSelectAll(!!checked)}
+                  aria-label="Select all"
+                />
+              </TableHead>
+              <TableHead className="h-[48px]">
+                <Button
+                  variant="ghost"
+                  className="p-0 h-auto font-medium text-xs hover:bg-transparent dark:text-white"
+                  onClick={() => handleSort('deviceId')}
+                >
+                  Device ID
+                  {renderSortIcon('deviceId')}
+                </Button>
+              </TableHead>
+              <TableHead className="h-[48px]">
+                <Button
+                  variant="ghost"
+                  className="p-0 h-auto font-medium text-xs hover:bg-transparent dark:text-white"
+                  onClick={() => handleSort('name')}
+                >
+                  Name
+                  {renderSortIcon('name')}
+                </Button>
+              </TableHead>
+              <TableHead className="h-[48px]">
+                <Button
+                  variant="ghost"
+                  className="p-0 h-auto font-medium text-xs hover:bg-transparent dark:text-white"
+                  onClick={() => handleSort('type')}
+                >
+                  Type
+                  {renderSortIcon('type')}
+                </Button>
+              </TableHead>
+              <TableHead className="h-[48px]">
+                <Button
+                  variant="ghost"
+                  className="p-0 h-auto font-medium text-xs hover:bg-transparent dark:text-white"
+                  onClick={() => handleSort('status')}
+                >
+                  Status
+                  {renderSortIcon('status')}
+                </Button>
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {sortedDevices.map(device => (
+              <TableRow 
+                key={device.id}
+                className="hover:bg-muted/50 dark:hover:bg-muted/50"
+              >
+                <TableCell className="w-[48px] h-[52px]">
+                  <Checkbox
+                    id={`select-${device.id}`}
+                    checked={selectedDeviceIds.includes(device.id)}
+                    onCheckedChange={checked => toggleSelectDevice(device.id, !!checked)}
+                    aria-label={`Select ${device.name}`}
+                  />
+                </TableCell>
+                <TableCell className="h-[52px] text-sm font-normal">{device.deviceId}</TableCell>
+                <TableCell className="h-[52px] text-sm font-normal">{device.name}</TableCell>
+                <TableCell className="h-[52px] text-sm font-normal">{device.type}</TableCell>
+                <TableCell className="h-[52px]">
+                  <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                    device.status === 'active' ? 'bg-[#DCFCE7] text-[#166534] dark:bg-[#052E16] dark:text-[#4ADE80]' :
+                    device.status === 'inactive' ? 'bg-[#F4F4F5] text-[#3F3F46] dark:bg-[#18181B] dark:text-[#A1A1AA]' :
+                    'bg-[#FEF9C3] text-[#854D0E] dark:bg-[#422006] dark:text-[#FDE047]'
+                  }`}>
+                    {device.status}
+                  </span>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       </div>
-      
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        pageSize={pageSize}
-        totalItems={totalItems}
-        selectedCount={selectedDeviceIds.length}
-        onPageChange={onPageChange}
-        onPageSizeChange={onPageSizeChange}
-      />
+      {totalPages > 0 && (
+        <div className="">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            pageSize={pageSize}
+            totalItems={totalItems}
+            selectedCount={selectedDeviceIds.length}
+            onPageChange={onPageChange}
+            onPageSizeChange={onPageSizeChange}
+          />
+        </div>
+      )}
     </div>
   );
 }

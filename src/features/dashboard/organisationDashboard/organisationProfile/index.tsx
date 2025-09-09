@@ -13,6 +13,7 @@ import { DevicesTable } from './components/devices/DevicesTable';
 import { BillingsTable } from './components/billings/billingsTable';
 import { mockBillings } from './components/billings/billingsData';
 import type { User } from './components/users/types';
+import { DashboardLayout } from '../../DashboardLayout';
 
 interface OrganizationData {
   id: string;
@@ -147,6 +148,7 @@ export function OrganizationProfile() {
   }
 
   return (
+    <DashboardLayout>
     <div className="flex flex-col gap-3 p-6 w-full ">
       <div className="flex flex-col items-start gap-3 w-full">
         <div className="flex items-center justify-center gap-2 h-8 cursor-pointer text-zinc-500 hover:text-zinc-600" onClick={handleBack}>
@@ -241,5 +243,6 @@ export function OrganizationProfile() {
         )}
       </div>
     </div>
+    </DashboardLayout>
   );
 }

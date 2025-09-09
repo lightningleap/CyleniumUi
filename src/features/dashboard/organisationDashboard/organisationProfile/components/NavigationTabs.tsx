@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Search, Filter } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -22,36 +23,36 @@ export function NavigationTabs({ activeTab, onTabChange, onSearch }: NavigationT
     };
 
     return (
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 ">
             {/* Tabs - Full width on mobile, left-aligned on larger screens */}
-            <div className="w-full sm:w-auto overflow-x-auto sm:flex-1 sm:flex sm:justify-start">
+            <div className="w-full sm:w-auto overflow-x-auto sm:flex-1 sm:flex sm:justify-start rounded-md">
                 <Tabs
                     defaultValue={activeTab}
                     onValueChange={onTabChange}
-                    className="w-full sm:w-[364px] dark:bg-[#27272A]"
+                    className="w-full sm:w-[364px] dark:bg-[#27272A] rounded-md"
                 >
                     <TabsList className="bg-zinc-100 w-full flex justify-between dark:bg-[#27272A]">
                         <TabsTrigger
                             value="users"
-                            className="flex-1 data-[state=active]:bg-white data-[state=active]:text-zinc-900 text-zinc-500 dark:data-[state=active]:bg-[#09090B] dark:data-[state=active]:text-white"
+                            className="flex-1 rounded-md data-[state=active]:bg-white data-[state=active]:text-zinc-900 text-zinc-500 dark:data-[state=active]:bg-[#09090B] dark:data-[state=active]:text-white dark:rounded-md"
                         >
                             Users
                         </TabsTrigger>
                         <TabsTrigger
                             value="devices"
-                            className="flex-1 data-[state=active]:bg-white data-[state=active]:text-zinc-900 text-zinc-500 dark:data-[state=active]:bg-[#09090B] dark:data-[state=active]:text-white"
+                            className="flex-1 rounded-md data-[state=active]:bg-white data-[state=active]:text-zinc-900 text-zinc-500 dark:data-[state=active]:bg-[#09090B] dark:data-[state=active]:text-white dark:rounded-md"
                         >
                             Devices
                         </TabsTrigger>
                         <TabsTrigger
                             value="billing"
-                            className="flex-1 data-[state=active]:bg-white data-[state=active]:text-zinc-900 text-zinc-500 dark:data-[state=active]:bg-[#09090B] dark:data-[state=active]:text-white"
+                            className="flex-1 rounded-md data-[state=active]:bg-white data-[state=active]:text-zinc-900 text-zinc-500 dark:data-[state=active]:bg-[#09090B] dark:data-[state=active]:text-white dark:rounded-md"
                         >
                             Billing
                         </TabsTrigger>
                         <TabsTrigger
                             value="settings"
-                            className="flex-1 data-[state=active]:bg-white data-[state=active]:text-zinc-900 text-zinc-500 dark:data-[state=active]:bg-[#09090B] dark:data-[state=active]:text-white"
+                            className="flex-1 rounded-md data-[state=active]:bg-white data-[state=active]:text-zinc-900 text-zinc-500 dark:data-[state=active]:bg-[#09090B] dark:data-[state=active]:text-white dark:rounded-md"
                         >
                             Settings
                         </TabsTrigger>

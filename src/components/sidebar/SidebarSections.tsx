@@ -24,12 +24,12 @@ export const SIDEBAR_SECTIONS: SidebarSection[] = [
       },
       {
         title: 'Billings',
-        href: '/billings',
+        href: '/organizationsBilling',
         icon: <CreditCard size={16} />
       },
       {
         title: 'Operators',
-        href: '/operators',
+        href: '/organizationsOperators',
         icon: <Users size={16} />
       },
       {

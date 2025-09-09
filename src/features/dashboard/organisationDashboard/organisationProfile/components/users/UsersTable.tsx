@@ -96,8 +96,9 @@ export function UsersTable({
   };
 
   return (
-    <div className="rounded-md border">
-      <Table>
+    <div>
+       <div className="rounded-md border dark:border-[#27272A]">
+      <Table >
         <TableHeader>
           <TableRow>
             <TableHead className="w-12">
@@ -200,6 +201,7 @@ export function UsersTable({
           ))}
         </TableBody>
       </Table>
+      </div>
       
 
           <Pagination
