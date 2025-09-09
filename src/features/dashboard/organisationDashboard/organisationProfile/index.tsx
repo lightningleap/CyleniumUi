@@ -14,6 +14,7 @@ import { BillingsTable } from './components/billings/billingsTable';
 import { mockBillings } from './components/billings/billingsData';
 import type { User } from './components/users/types';
 import { DashboardLayout } from '../../DashboardLayout';
+import { Settings } from './components/settings/Settings';
 
 interface OrganizationData {
   id: string;
@@ -238,9 +239,7 @@ export function OrganizationProfile() {
             onPageSizeChange={setBillingPageSize}
           />
         )}
-        {activeTab === 'settings' && (
-          <div>Settings content will go here</div>
-        )}
+        {activeTab === 'settings' && <Settings />}
       </div>
     </div>
     </DashboardLayout>

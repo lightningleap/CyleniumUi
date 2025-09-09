@@ -18,7 +18,7 @@ export function SearchBar({
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <div className="flex flex-col sm:flex-row items-center justify-between w-full h-auto sm:h-[36px] gap-4 sm:gap-[16px]">
-      <div className="flex items-center gap-2 sm:gap-[8px] w-full max-w-[352px] sm:w-[283px]">
+      <div className="flex items-center gap-2 sm:gap-[8px] w-full max-w-[364px] sm:w-[283px]">
         <div className="relative w-full sm:w-[239px]">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#71717A] dark:text-[#A1A1AA]" />
           <Input
@@ -40,7 +40,7 @@ export function SearchBar({
       <Button 
         variant="bluebutton" 
         onClick={() => setIsModalOpen(true)} 
-        className="w-full max-w-[352px] sm:w-[156px] h-9 sm:h-[36px] bg-[#006FE8] hover:bg-[#006FE8]/90 text-white font-medium text-sm leading-5 tracking-[-0.006em] rounded-[6px] px-4"
+        className="w-full max-w-[364px] sm:w-[156px] h-9 sm:h-[36px] bg-[#006FE8] hover:bg-[#006FE8]/90 text-white font-medium text-sm leading-5 tracking-[-0.006em] rounded-[6px] px-4"
       >
         New User
       </Button>

@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as errors503RouteImport } from './routes/(errors)/503'
@@ -30,6 +31,11 @@ import { Route as dashboardorganisationOrganisationDashboardNewRouteImport } fro
 import { Route as dashboardorganisationOrganisationDashboardIdRouteImport } from './routes/(dashboard)/(organisation)/organisationDashboard/$id'
 import { Route as dashboardorganisationOrganisationIdRouteImport } from './routes/(dashboard)/(organisation)/organisation/$id'
 
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -143,6 +149,7 @@ const dashboardorganisationOrganisationIdRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/settings': typeof SettingsRoute
   '/forgotPassword': typeof authForgotPasswordRoute
   '/mfa': typeof authMfaRoute
   '/sign-in': typeof authSignInRoute
@@ -165,6 +172,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/settings': typeof SettingsRoute
   '/forgotPassword': typeof authForgotPasswordRoute
   '/mfa': typeof authMfaRoute
   '/sign-in': typeof authSignInRoute
@@ -188,6 +196,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/settings': typeof SettingsRoute
   '/(auth)/forgotPassword': typeof authForgotPasswordRoute
   '/(auth)/mfa': typeof authMfaRoute
   '/(auth)/sign-in': typeof authSignInRoute
@@ -212,6 +221,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/settings'
     | '/forgotPassword'
     | '/mfa'
     | '/sign-in'
@@ -234,6 +244,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/settings'
     | '/forgotPassword'
     | '/mfa'
     | '/sign-in'
@@ -256,6 +267,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/settings'
     | '/(auth)/forgotPassword'
     | '/(auth)/mfa'
     | '/(auth)/sign-in'
@@ -279,6 +291,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  SettingsRoute: typeof SettingsRoute
   authForgotPasswordRoute: typeof authForgotPasswordRoute
   authMfaRoute: typeof authMfaRoute
   authSignInRoute: typeof authSignInRoute
@@ -301,6 +314,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -447,6 +467,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  SettingsRoute: SettingsRoute,
   authForgotPasswordRoute: authForgotPasswordRoute,
   authMfaRoute: authMfaRoute,
   authSignInRoute: authSignInRoute,

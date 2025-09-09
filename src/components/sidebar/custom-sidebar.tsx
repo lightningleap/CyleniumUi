@@ -424,7 +424,7 @@ export function SidebarLayoutWithNavbar({
         {navbar}
         
         {/* Main content area */}
-        <div className="flex-1 space-y-4 dark:bg-background">
+        <div className="flex-1 space-y-4 dark:bg-black">
           {children}
         </div>
       </main>
@@ -480,7 +480,7 @@ export function ResponsiveSidebarLayout({
         )}
         
         {/* Main content area */}
-        <div className="flex-1 space-y-4 dark:bg-background">
+        <div className="flex-1 space-y-4 dark:bg-black">
           {children}
         </div>
       </main>
