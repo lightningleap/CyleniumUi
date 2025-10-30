@@ -14,7 +14,7 @@ export const SIDEBAR_SECTIONS: SidebarSection[] = [
     items: [
       {
         title: 'Dashboard',
-        href: '/organisationDashboard',
+        href: '/organizationDashboard',
         icon: <LayoutDashboard size={16} />
       },
       {
@@ -28,7 +28,7 @@ export const SIDEBAR_SECTIONS: SidebarSection[] = [
         icon: <CreditCard size={16} />
       },
       {
-        title: 'Operators',
+        title: 'Platform Users',
         href: '/organizationsOperators',
         icon: <Users size={16} />
       },

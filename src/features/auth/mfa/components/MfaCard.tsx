@@ -95,7 +95,7 @@ export function MfaCard() {
       if (user.role === 'admin') {
         navigate({ to: '/adminDashboard' })
       } else if (user.role === 'organization') {
-        navigate({ to: '/organisationDashboard' })
+        navigate({ to: '/organizationDashboard' })
       } else {
         navigate({ to: '/generalUserDashBoard' }) // Default dashboard for other roles
       }

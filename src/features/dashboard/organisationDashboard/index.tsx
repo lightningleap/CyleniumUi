@@ -192,11 +192,11 @@ export default function OrganizationDashboard() {
 
   return (
     <DashboardLayout>
-      <div className="flex flex-col h-[calc(100vh-4rem)] w-full overflow-auto scrollbar-thin scrollbar-thumb-muted-foreground/20 scrollbar-track-background hover:scrollbar-thumb-muted-foreground/30">
+      <div className="flex flex-col  w-full overflow-auto scrollbar-thin scrollbar-thumb-muted-foreground/20 scrollbar-track-background hover:scrollbar-thumb-muted-foreground/30">
         {isNewOrgRoute || isProfileRoute ? (
           <Outlet />
         ) : (
-          <div className="flex-1 space-y-4 p-8 pt-6">
+          <div className="flex-1 space-y-4 p-6">
             <div className="flex items-center justify-between space-y-2">
               <h2 className="text-3xl font-semibold tracking-tight">Organizations</h2>
             </div>

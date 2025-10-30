@@ -21,17 +21,51 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
   const dashboardType = getDashboardType(pathname);
   const isNewOrgRoute = pathname.endsWith('/new');
+  const isOrgBillingsRoute = pathname.includes('billings');
+  const isOrganizationsBilling = pathname === '/organizationsBilling';
+  const isOrganizationsOperators = pathname === '/organizationsOperators';
+  const isOrganizationsList = pathname === '/organizations';
   
-  const breadcrumb = isNewOrgRoute 
-    ? [
-        { label: 'Dashboard', href: '/dashboard' },
-        { label: dashboardType, href: '/organisationDashboard' },
-        { label: 'New Organization', active: true }
-      ]
-    : [
-        { label: 'Dashboard', href: '/dashboard' },
-        { label: dashboardType, active: true }
-      ];
+  // Extract organization ID from the URL if it exists
+  const pathSegments = pathname.split('/').filter(Boolean);
+  const orgSegmentIndex = pathSegments.findIndex(seg => seg === 'organization');
+  const orgId = orgSegmentIndex >= 0 ? pathSegments[orgSegmentIndex + 1] : null;
+  
+  let breadcrumb = [];
+  
+  if (isNewOrgRoute) {
+    breadcrumb = [
+      { label: 'Dashboard', href: '/dashboard' },
+      { label: 'Organizations', href: '/organizations' },
+      { label: 'New Organization', active: true }
+    ];
+  } else if (isOrganizationsBilling) {
+    breadcrumb = [
+      { label: 'Dashboard', href: '/dashboard' },
+      { label: 'Billings', active: true }
+    ];
+  } else if (isOrgBillingsRoute && orgId) {
+    breadcrumb = [
+      { label: 'Dashboard', href: '/dashboard' },
+      { label: 'Organizations', href: '/organizations' },
+      { label: 'Billings', active: true }
+    ];
+  } else if (isOrganizationsOperators) {
+    breadcrumb = [
+      { label: 'Dashboard', href: '/dashboard' },
+      { label: 'Platform Users', active: true }
+    ];
+  } else if (isOrganizationsList) {
+    breadcrumb = [
+      { label: 'Dashboard', href: '/dashboard' },
+      { label: 'Organizations', active: true }
+    ];
+  } else {
+    breadcrumb = [
+      { label: 'Dashboard', href: '/dashboard' },
+      { label: dashboardType, active: true }
+    ];
+  }
 
   return (
     <SidebarLayoutWithNavbar
